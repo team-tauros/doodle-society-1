@@ -27,16 +27,20 @@
 
 .Doodle-header {
   position: relative;
-  margin-right: auto;
-  margin-left: auto;
-  top: 480px;
+  top: 540px;
+  width: 400px;
+  background-color: #ff007f;
+  border: 4px solid #fff000;
+  border-radius: 15px;
+  padding: 2vmin 2vmin;
+  height: 150px;
+  margin: auto;
 }
 
 .gallery-img {
   height: 200px;
   width: 200px;
   display: inline-block;
-  padding-bottom: 50px;
 }
 
 .doodle-container {
@@ -70,3 +74,14 @@
   padding: 10px;
 }
 
+.Doodle-caption {
+  position: absolute;
+  top: 150px;
+  left: 20%;
+}
+
+.spinner {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+}

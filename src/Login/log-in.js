@@ -11,10 +11,8 @@ const Login = ({ setUser }) => {
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
         axios.post('/api/users', response.profileObj)
-            .then(id => {
-                return axios.get(`/api/users/${id.data}`);
-            })
-            .then(user => {
+            .then(id => axios.get(`/api/users/${id.data}`))
+            .then((user) => {
                 setUser(user.data);
             })
             .catch(err => console.error(err));
