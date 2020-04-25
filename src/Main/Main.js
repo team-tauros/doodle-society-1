@@ -107,8 +107,13 @@ const Home = ({
                     }}
                   />
                 </div>
-                <div className='countContainer'>
-                <p>{<b>Total Likes: {dood.count + ((load[dood.id] && likes[dood.id]) || 0)}</b>}</p>
+                <div className="countContainer">
+                  <p>
+                    <b>
+                      Total Likes:
+                      {dood.count + (load[dood.id] && likes[dood.id] || 0)}
+                    </b>
+                  </p>
                 </div>
               </p>
               <p align="justify"><font className="caption">{dood.caption}</font></p>
