@@ -7,6 +7,7 @@ import { FaHeart } from 'react-icons/fa';
 import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 import Upload from '../Upload';
+import Button from 'react-bootstrap/Button'
 
 const moment = require('moment');
 
@@ -135,9 +136,9 @@ const Home = ({
             </div>
           );
         })}
-        <button onClick={() => setNumDoods(numDoods + 5)}>Show More Doodles</button>
+        <Button variant="primary" onClick={() => setNumDoods(numDoods + 5)}>Show More Doodles </Button>
         <p>
-          {numDoods > 5 && <button onClick={() => setNumDoods(numDoods - 5)}>Show Fewer Doodles</button>}
+          {numDoods > 5 && <Button variant="danger" onClick={() => setNumDoods(numDoods - 5)}>Show Less Doodles </Button>}
         </p>
       </div>
     </div>
