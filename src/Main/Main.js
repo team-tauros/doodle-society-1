@@ -16,6 +16,7 @@ const Home = ({
 }) => {
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState({});
+  const [numDoods, setNumDoods] = useState(5);
 
 
   const toggleLike = (e) => {
@@ -78,7 +79,7 @@ const Home = ({
         </div>
       </div>
       <div className="main">
-        {orderDoods().map((dood) => {
+        {orderDoods().slice(0, numDoods).map((dood) => {
           const doodler = dood.username === user.name ? user
             : friends.filter((friend) => friend.name === dood.username)[0];
           return (
@@ -134,6 +135,10 @@ const Home = ({
             </div>
           );
         })}
+        <button onClick={() => setNumDoods(numDoods + 5)}>Show More Doodles</button>
+        <p>
+          {numDoods > 5 && <button onClick={() => setNumDoods(numDoods - 5)}>Show Fewer Doodles</button>}
+        </p>
       </div>
     </div>
 

@@ -9,19 +9,14 @@ const Comments = ({user, dood }) => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState("");
     const [showComments, setShowComments ] = useState(3);
-    const [fetchComments, setFetch] = useState();
     
     const getComments = () => axios.get(`/api/comments/${dood.id}`)
         .then(results => setComments(results.data))
-        .catch(err => console.error(err))
+        .catch(err => console.error(err));
 
     useEffect(() => {
-        if (fetchComments) {
-            clearInterval(fetchComments);
-        }
         getComments();
-        setFetch(setInterval(getComments, 5000));
-    }, []);
+    }, [dood]);
     
 
     const addComments = () => {

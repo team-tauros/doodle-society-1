@@ -64,7 +64,7 @@ fastify.post('/api/doodles/likes/:userId/:doodleId', (req, res) => {
     .then((doodle) => res.status(200).send(doodle.rows))
     .catch((err) => {
       console.error(err);
-      res.status.send();
+      res.status(500).send();
     });
 });
 
@@ -73,7 +73,7 @@ fastify.get('/api/doodles/likes/:userId', (req, res) => {
     .then((likedDoods) => res.status(200).send(likedDoods.map((dood) => dood.rows[0])))
     .catch((err) => {
       console.log(err);
-      res.status.send();
+      res.status(500).send();
     });
 });
 
