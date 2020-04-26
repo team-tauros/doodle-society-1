@@ -1,7 +1,8 @@
 /* eslint-disable max-lines-per-function */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Button, Comment, Form, Segment, List } from 'semantic-ui-react'
+import { Comment, Form, Segment, List } from 'semantic-ui-react'
+import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom';
 const moment = require('moment');
 
@@ -74,7 +75,7 @@ const Comments = ({user, dood }) => {
                 <Form.TextArea id={`comment${dood.id}`} onChange={(e) => {
                     setComment(e.target.value) 
                 }}/>
-                <Button onClick={() => addComments()} content="Reply" labelPosition="left" primary />
+                <Button variant="info" onClick={() => addComments()} labelPosition="left">Reply</Button>
             </Form>
             
         </Comment.Group>
