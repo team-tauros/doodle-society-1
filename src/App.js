@@ -24,15 +24,20 @@ function App() {
   const [requests, setRequests] = useState([]);
   const [likedDoods, setLikedDoods] = useState([]);
   const [loadingDoods, setLoading] = useState(true);
+  const [fetchFriends, setFetch] = useState();
 
   const getDoods = (user) => axios.get(`/api/doodles/${user.id}`);
 
   const getImgs = (user) => axios.get(`/api/images/${user.id}`);
 
-  const getLikedDoods = (user) => axios.get(`/api/doodles/likes/${user.id}`)
+  const getLikedDoods = (user) => {
+    if (!user.id) {
+      return;
+    }
+    axios.get(`/api/doodles/likes/${user.id}`)
     .then((likedDoods) => {
       setLikedDoods(likedDoods.data);
-    });
+    })}
 
   const getAllDoods = () => {
     if (!user.id) {
@@ -75,16 +80,19 @@ function App() {
   }, [friends]);
 
   useEffect(() => {
+    if (fetchFriends) {
+      clearInterval(fetchFriends);
+    }
     if (user.id) {
       getFriends(user)
         .then((results) => setFriends(results.data))
         .catch((err) => console.error(err));
 
-      setInterval(() => {
+      setFetch(setInterval(() => {
         getFriends(user)
           .then((results) => setFriends(results.data))
           .catch((err) => console.error(err));
-      }, 5000);
+      }, 5000));
     }
   }, [user]);
 
@@ -195,7 +203,14 @@ function App() {
                     />
                   );
                 }
-                return loadingDoods ? <div>...loading doods...</div>
+                return loadingDoods ? (
+                  <div>
+                    <img src={process.env.PUBLIC_URL + '/spinner.gif'} />
+                    <p>
+                      ...loading doods...
+                    </p>
+                  </div>
+                )
                   : (
                     <Main
                       user={user}

@@ -6,7 +6,6 @@ const Bio = ({ user, allowEditBio }) => {
     const [bio, setBio] = useState('');
     const [loadBio, setLoad] = useState(false);
     const [editBio, setEditBio] = useState(false);
-    const [fetch, setFetch] = useState();
 
     const getBio = () => {
         axios.get(`/api/bios/${user.id}`)
@@ -31,16 +30,12 @@ const Bio = ({ user, allowEditBio }) => {
 
     useEffect(() => {
         setLoad(false);
-        if (fetch) {
-            clearInterval(fetch);
-        }
         getBio();
-        setFetch(setInterval(getBio, 5000));
     }, [user]);
 
     return (
     <div className="Bio-box" style={{"color": "#FF2372"}}>
-      {loadBio && bio}
+      {!loadBio && <img src={process.env.PUBLIC_URL + '/spinner.gif'} /> || bio}
     {loadBio && allowEditBio && !editBio && <p><Button variant="primary" onClick={() => setEditBio(!editBio)}>{Boolean(bio) && 'Edit Bio' || 'Add Bio'}</Button></p>}
     {editBio && 
     <div>
