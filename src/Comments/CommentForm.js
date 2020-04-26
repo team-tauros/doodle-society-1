@@ -23,6 +23,7 @@ const Comments = ({user, dood }) => {
         if (!comment) {
             return;
         }
+        document.getElementById(`comment${dood.id}`).value = '';
         axios.post('/api/comments', {"doodle_id": dood.id,
             comment,
             "user_id": user.id})
@@ -70,7 +71,7 @@ const Comments = ({user, dood }) => {
                  Show More Comments 
             </div>}
             <Form reply>
-                <Form.TextArea id="comment" onChange={(e) => {
+                <Form.TextArea id={`comment${dood.id}`} onChange={(e) => {
                     setComment(e.target.value) 
                 }}/>
                 <Button onClick={() => addComments()} content="Reply" labelPosition="left" primary />

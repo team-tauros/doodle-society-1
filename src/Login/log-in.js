@@ -6,8 +6,10 @@ import axios from 'axios';
 const Login = ({ setUser }) => {
     const [ name, setName] = useState("");
     const [ url, setUrl] = useState("");
+    const [load, setLoad] = useState(false);
 
     const responseGoogle = (response) => {
+        setLoad(true);
         setName(response.profileObj.name);
         setUrl(response.profileObj.imageUrl);
         axios.post('/api/users', response.profileObj)
@@ -26,6 +28,7 @@ const Login = ({ setUser }) => {
         <h3>{ name }</h3>
         <img src={url} alt={name}/>
             <div>
+            {load && <img src={process.env.PUBLIC_URL + '/spinner.gif'} /> || (
             <GoogleLogin
                 clientId="847322546124-r3jf05c1p89vlk3g6jbrbsv0632mh4go.apps.googleusercontent.com"
                 buttonText="Login"
@@ -33,7 +36,8 @@ const Login = ({ setUser }) => {
                 onFailure={() => console.log('failed to login')}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
-                />       
+            />
+            )}       
             </div>
         </div>
     </div>
