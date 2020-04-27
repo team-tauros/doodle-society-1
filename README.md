@@ -60,7 +60,7 @@ Create the trigrams extension in doodle database by running:
 CREATE EXTENSION pg_trgm;
 ```
 
-Create a Cloudinary account. Take note of your cloud name. Create an upload preset with ... Take note of its name as well. 
+Create a Cloudinary account. Take note of your cloud name. Create an upload preset with the following Incoming Transformation settings: c_crop, g_custom, fl_force_strip. Take note of its name as well. 
 
 Create a .env file in the root directory:
 
@@ -84,6 +84,14 @@ Make sure to also run the API server:
 ```sh
 npm start
 ```
+
+If you wish to serve everything off one server (as you will in production), first run:
+
+```sh
+npm run build
+```
+
+Once the build is complete, you can serve by simply running npm start.
 
 And you're ready to go!
 
