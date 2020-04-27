@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemText, List } from '@material-ui/core';
@@ -7,6 +6,7 @@ import axios from 'axios';
 const SideNav = ({
   user, friends, setFriends, getFriends, requests,
 }) => {
+  //  send a friend request, then refresh friends
   const addFriend = (friend) => {
     axios.post('/api/friends', { user_id: user.id, friend_id: friend.id })
       .then(() => {
@@ -17,7 +17,6 @@ const SideNav = ({
   };
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <List disablePadding dense>
       <ListItem button>
         <ListItemText style={{ color: '#FFF64F' }}><b>Friends</b></ListItemText>

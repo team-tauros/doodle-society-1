@@ -6,28 +6,27 @@ const Bio = ({ user, allowEditBio }) => {
     const [bio, setBio] = useState('');
     const [loadBio, setLoad] = useState(false);
     const [editBio, setEditBio] = useState(false);
-
-    const getBio = () => {
-        axios.get(`/api/bios/${user.id}`)
+    //  get a user's bio
+    const getBio = () => axios.get(`/api/bios/${user.id}`)
       .then((result) => {
-          setBio(result.data);
-          setLoad(true);
+        setBio(result.data);
+        setLoad(true);  //  set load to true now that bio is loaded
       })
       .catch(err => console.error(err)); 
-    }
-
+    //  add a user bio
     const addBio = () => {
+        //  post bio to server
         axios.post('api/bios', {
             "user_id": user.id,
             "bio": document.getElementById('bio').value
-        })
-      .then(() => {
-          setEditBio(false);
-          getBio();
-      })
-      .catch(err => console.error(err));
+          })
+          .then(() => {
+            setEditBio(false); // set edit bio to false to hide text box
+            getBio(); //  refresh bio
+          })
+          .catch(err => console.error(err));
     }
-
+    //  when component receives a new user prop, set load to false and get user bio
     useEffect(() => {
         setLoad(false);
         getBio();

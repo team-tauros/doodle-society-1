@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Main.css';
@@ -10,56 +9,68 @@ import Upload from '../Upload';
 import Button from 'react-bootstrap/Button'
 
 const moment = require('moment');
-
-
+//  main feed
 const Home = ({
   user, doods, friends, getFriends, setFriends, likedDoods,
 }) => {
+  //  likes and load will store temporary information for increases and decreases in a doodle's likes
+  //  when a user likes/unlikes a doodle, the increase/decrease will immediately be rendered while the
+  //  page is in between refreshes of like counts from the server
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState({});
   const [numDoods, setNumDoods] = useState(5);
 
-
+  //  toggle appearance of likes heart
   const toggleLike = (e) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart' : e.currentTarget.className.baseVal = 'clear-heart';
   };
-
-  // eslint-disable-next-line camelcase
+  //  like a doodle
   const addLikedDood = (user_id, doodle_id) => {
+    //  set doodle's load status to true
     const updateLoad = {...load};
     updateLoad[doodle_id] = true;
     setLoad(updateLoad);
+    //  set doodle's like increase
     const updateLikes = {...likes};
     updateLikes[doodle_id] ? updateLikes[doodle_id]++ : updateLikes[doodle_id] = 1;
     setLikes(updateLikes);
+    //  post like to db
     axios.post(`/api/doodles/likes/${user_id}/${doodle_id}`);
   };
+  //  unlike a doodle
   const unLikeDood = (user_id, doodle_id) => {
+    // set doodle's load status to true
     const updateLoad = {...load};
     updateLoad[doodle_id] = true;
     setLoad(updateLoad);
+    //  set doodle's like decrease
     const updateLikes = {...likes};
     updateLikes[doodle_id] ? updateLikes[doodle_id]-- : updateLikes[doodle_id] = -1;
     setLikes(updateLikes);
-    axios.patch(`/api/doodles/likes/${user_id}/${doodle_id}`);
+    axios.patch(`/api/doodles/likes/${user_id}/${doodle_id}`); // delete like from db
   };
-
+  //  whenever a refresh comes in, clear temporary likes data
   useEffect(() => {
     setLoad({});
     setLikes({});
   }, [doods]);
 
+  //  check if a doodle is in user's likes
   const isLiked = (dood) => likedDoods.some((likedDood) => likedDood.id === dood.id);
 
-
+  //  order all doodles by timestamp
   const orderDoods = () => {
+    //  allDoods container for ordered doodles
     const allDoods = [];
+    //  push all doodles stored on doods object into allDoods
     Object.values(doods).forEach((doodColl) => {
       doodColl.forEach((dood) => allDoods.push(dood));
     });
+    //  sort allDoods by timestamp
     allDoods.sort((a, b) => (a.created_at > b.created_at ? -1 : 1));
     return allDoods;
   };
+  
   return (
     <div className="Home">
       <div className="header text-left">

@@ -10,8 +10,9 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
   const [friends, setFriends] = useState([]);
   const [fetch, setFetch] = useState();
   const [load, setLoad] = useState(false);
-
+  //  schedule a fetch of user's images and friends in 5 seconds whenever load or friends state is set
   useEffect(() => {
+    //  only schedule timeout if initial profile load is complete
     if(load) {
       setFetch(setTimeout(() => {
         getImgs(user)
@@ -21,9 +22,11 @@ const Profile = ({ user, doods, getImgs, getFriends, requests, allowEditBio, get
       }, 5000));
     }
   }, [load, friends]);
-
+  //  fetch images and friends whenever profile component receives a new user prop
   useEffect(() => {
+    //  set load to false to show profile is loading initial info
     setLoad(false);
+    //  clear any scheduled timeouts from a previous user profile
     if (fetch) {
       clearTimeout(fetch);
     }

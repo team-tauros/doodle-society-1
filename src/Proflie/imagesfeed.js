@@ -6,34 +6,36 @@ import './imagefeed.css';
 
 const moment = require('moment');
 
-
 const NormalImageFeed = ({
   imgs, user, doods, getAllDoods, allowDeletePicture, getImgs, setImgs,
 }) => {
   const [imgIndex, setImgIndex] = useState(0);
   const [doodIndex, setDoodIndex] = useState(0);
-
+  //  delete a doodle
   const deleteDoodle = (id) => {
+    //  set active index of doodle carousel to 0
     setDoodIndex(0);
+    //  delete the doodle, then refresh doodles
     return axios.delete(`/api/doodles/${id}`)
       .then(() => {
         getAllDoods();
       });
   };
 
+  //  handle doodle carousel selection
   const handleSelectDood = (i) => setDoodIndex(i);
-
+  //  handle image carousel selection
   const handleSelectImg = (i) => setImgIndex(i);
-
+  //  delete an image
   const deleteImage = (id) => {
+    //  set active index of both carousels to 0
     setImgIndex(0);
     setDoodIndex(0);
+    //  delete the image, then refresh images
     return axios.delete(`/api/images/${id}`)
       .then(() => getImgs(user))
       .then((imgs) => setImgs(imgs.data));
   };
-
-  const history = useHistory();
 
   return (
     <div className="profile-feed">
@@ -51,10 +53,6 @@ const NormalImageFeed = ({
             onClick={() => {
               if (window.confirm('WARNING: Deleting an image will delete all of the doodles associated with it. Are you sure you would like to delete this image?')) {
                 deleteImage(img.id);
-                // history.push({
-                //   pathname: '/profile',
-                //   user: user
-                // })
               }
             }}
             src="https://www.freeiconspng.com/uploads/trash-can-icon-27.png"

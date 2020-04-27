@@ -1,8 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/jsx-filename-extension */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './App.css';
@@ -14,11 +9,11 @@ import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import 'fabric-history';
 
+//  declare global canvas variable
 let canvas;
 
 function Canvas(props) {
   const {
-    // eslint-disable-next-line camelcase
     url, original_id, user, getAllDoods,
   } = props;
   const [brushColor, setBrushColor] = useState('blue');
@@ -32,9 +27,11 @@ function Canvas(props) {
       height: 375,
       width: 375,
     });
+    //  make sure new strokes on canvas are not selectable
     canvas.on('mouse:up', () => { canvas.item(canvas._objects.length - 1).selectable = false; });
     canvas.freeDrawingBrush.width = 25;
     canvas.freeDrawingBrush.color = 'blue';
+    //  set background of canvas container to received image url
     document.getElementById('canvas-container').style.backgroundImage = `url(${url})`;
 
   }, [url]);
@@ -52,48 +49,60 @@ function Canvas(props) {
   };
 
   const history = useHistory();
+  //  handle changes to brush options
   const handleChange = (event) => {
     let { value } = event.target;
+    //  if received option value is a number in string form, convert it to a number
     if (!isNaN(Number(value))) {
       value = Number(value);
     }
+    //  set new freeDrawingBrush option
     canvas.freeDrawingBrush[event.target.name] = value;
+    //  if a new color was set, set brush button color
     if (event.target.name === 'color') {
       setBrushColor(value);
     }
   };
-
+  //  clear canvas
   const clearCanvas = () => {
     canvas.clear();
   };
-
+  //  undo
   const undo = () => {
     canvas.undo();
   };
-
+  //  redo
   const redo = () => {
     canvas.redo();
   };
-
+  //  save a doodle
   const save = () => {
+    //  set saving state to true while doodle is saving
     setSaving(true);
+    //  get data url for doodle from canvas
     const dataUrl = document.getElementById('canvas').toDataURL();
+    //  get entered caption
     const caption = document.getElementById('caption').value;
+    //  post doodle info to server
     axios.post('/api/doodles', {
       url: dataUrl, caption, original_id, doodler_id: user.id,
     })
       .then(() => {
-        getAllDoods();
-        setTimeout(() => { store.addNotification(options); }, 0);
-        history.push('/profile');
+        getAllDoods();  //  refresh doodles
+        setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
+        history.push('/profile'); //  redirect to profile
       })
       .catch((err) => console.error(err));
   };
-
+  //  switch to stamp mode
   const useStamp = (event) => {
+    //  clear previous mouse down event listeners
     canvas.__eventListeners['mouse:down'] = [];
+    //  stop drawing mode
     canvas.isDrawingMode = false;
+    //  get stamp image source from clicked button
     const { src } = event.target;
+    //  add mouse down event listener to add stamp image at mouse position
     canvas.on('mouse:down', (e) => {
       fabric.Image.fromURL(src, (img) => {
         const posImg = img.set({ left: e.absolutePointer.x - 24, top: e.absolutePointer.y - 24 });
@@ -101,7 +110,7 @@ function Canvas(props) {
       });
     });
   };
-
+  // enable drawing mode and remove mouse down event listener (to stop stamping)
   const freeDraw = () => {
     canvas.isDrawingMode = true;
     canvas.__eventListeners['mouse:down'] = [];

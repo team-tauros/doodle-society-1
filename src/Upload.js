@@ -25,19 +25,22 @@ function Upload({ user }) {
 
   const beginUpload = (tag) => {
     const uploadOptions = {
-      cloudName: 'dmxywbm74',
+      cloudName: process.env.CLOUDNAME,
       tags: [tag, 'anImage'],
-      uploadPreset: 'wkyeuokl',
+      uploadPreset: process.env.CLOUDPRESET,
       cropping: 'true',
       croppingAspectRatio: 1,
       croppingCoordinatesMode: 'custom',
     };
+    //  open cloudinary upload widget
     openUploadWidget(uploadOptions, (error, photos) => {
+      //  if upload is successful
       if (!error) {
+        //  post urls of images to server
         Promise.all(photos.map((photo) => axios.post('/api/images', { url: photo.url, uploader_id: user.id })))
           .then(() => {
-            setTimeout(() => store.addNotification(options), 0);
-            history.push('/profile');
+            setTimeout(() => store.addNotification(options), 0); // notify user that upload was successful
+            history.push('/profile'); //  redirect to profile
           })
           .catch((err) => console.error(err));
       } else {

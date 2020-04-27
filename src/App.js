@@ -25,61 +25,69 @@ function App() {
   const [likedDoods, setLikedDoods] = useState([]);
   const [loadingDoods, setLoading] = useState(true);
   const [fetchFriends, setFetch] = useState();
-
+  //  get a user's doodles
   const getDoods = (user) => axios.get(`/api/doodles/${user.id}`);
-
+  //  get a user's images
   const getImgs = (user) => axios.get(`/api/images/${user.id}`);
-
+  //  get a user's liked doodles
   const getLikedDoods = (user) => {
+    //  only run if a user is logged in
     if (!user.id) {
       return;
     }
+    //  get user's likes, then set the likedDoods state  
     axios.get(`/api/doodles/likes/${user.id}`)
-    .then((likedDoods) => {
-      setLikedDoods(likedDoods.data);
-    })}
-
+      .then((likedDoods) => {
+        setLikedDoods(likedDoods.data);
+      })}
+  //  get all doodles from user and user's friends
   const getAllDoods = () => {
+    //  only run if a user is logged in
     if (!user.id) {
       return;
     }
+    //  allUsers will hold user plus all user's friends
     const allUsers = [user].concat(friends);
+    //  get doodles for each user
     return Promise.all(allUsers.map((user) => getDoods(user)))
       .then((allDoods) => {
         const newDoods = {};
-        allDoods
+        allDoods  //  store arrays of doodles on newDoods object, with user id for key
           .map((userDoods) => userDoods.data)
           .forEach((userDoods) => {
             if (userDoods.length) {
               newDoods[userDoods[0].doodler_id] = userDoods;
             }
           });
-        setDoods(newDoods);
-        setLoading(false);
+        setDoods(newDoods); //  set doods state to newDoods
+        setLoading(false);  //  set loadingDoods to false now that doodles are loaded
       })
       .catch((err) => console.error(err));
   };
-
+  //  get a user's friends
   const getFriends = (user) => axios.get(`/api/friends/${user.id}`);
-
+  //  get any friend requests sent to current user
   const getRequests = () => {
+    //  only run if a user is logged in
     if (!user.id) {
       return;
     }
+    //  get the requests, then filter out any confirmed requests
     axios.get(`/api/friends/requests/${user.id}`)
       .then((requests) => setRequests(requests.data
         .filter((request) => !friends
           .some((friend) => friend.id === request.id))))
       .catch((err) => console.error(err));
   };
-
+  //  whenever friends state is updated, refresh doodles, requests, and likes
   useEffect(() => {
     getAllDoods();
     getRequests();
     getLikedDoods(user);
   }, [friends]);
-
+  //  whenever a new user logs into app, get their friends and schedule a 5 second interval to refresh friends
   useEffect(() => {
+    //  clear any previously existing scheduled friends fetcher
     if (fetchFriends) {
       clearInterval(fetchFriends);
     }

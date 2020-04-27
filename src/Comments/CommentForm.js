@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Comment, Form, Segment, List } from 'semantic-ui-react'
@@ -10,30 +9,32 @@ const Comments = ({user, dood }) => {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState("");
     const [showComments, setShowComments ] = useState(3);
-    
+    //  get a doodle's comments, then set comments state
     const getComments = () => axios.get(`/api/comments/${dood.id}`)
         .then(results => setComments(results.data))
         .catch(err => console.error(err));
-
+    //  when component receives a doodle, get its comments
     useEffect(() => {
         getComments();
     }, [dood]);
-    
-
+    // post a new comment
     const addComments = () => {
+        //don't allow empty comments to be posted
         if (!comment) {
             return;
         }
+        //  clear contents of text box after comment is submitted
         document.getElementById(`comment${dood.id}`).value = '';
+        //  post comment to server
         axios.post('/api/comments', {"doodle_id": dood.id,
             comment,
             "user_id": user.id})
         .then(() => {
             if (comments.length > 2) {
-                setShowComments(comments.length + 1);
+                setShowComments(comments.length + 1);   //  expand displayed comments to show all comments
             }
             
-            return getComments();   
+            return getComments(); //  refresh comments
         })
         .catch(err => console.error(err));
     }

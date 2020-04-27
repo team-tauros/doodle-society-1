@@ -18,6 +18,7 @@ const Styles = styled.div`
     }
   }
 `;
+
 const NavigationBar = ({
   user, setUser, setFriends, setDoods, getAllDoods,
 }) => (
