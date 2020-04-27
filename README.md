@@ -24,10 +24,7 @@ Ever wanted to draw on your friend's face? Now you can with little to no reprecu
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
 - Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
@@ -36,14 +33,63 @@ Ever wanted to draw on your friend's face? Now you can with little to no reprecu
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
+Make sure you have PostgreSQL installed and have a password set for your root user.
+
+While still in the root directory, shell into your PostgreSQL server and run:
+
+```sh
+CREATE DATABASE doodle;
+```
+After doodle database is successfully created, connect to it by running:
+
+```sh
+\c doodle
+```
+
+Load up the schema by running:
+
+```sh
+\i schema.sql
+```
+
+Create the trigrams extension in doodle database by running:
+
+```sh
+CREATE EXTENSION pg_trgm
+```
+
+Create a Cloudinary account. Take note of your cloud name. Create an upload preset with ... Take note of its name as well. 
+
+Create a .env file in the root directory:
+
+```sh
+DBUSER=postgres
+DBPASS=YOUR_PASSWORD
+CLOUDNAME=YOUR_CLOUD_NAME
+CLOUDPRESET=YOUR_CLOUD_PRESET
+```
+
+Fill in the appropriate values.
+
+To run a live-updating version of Doodle Society for development run:
+
+```sh
+npm run start-dev
+```
+
+Make sure to also run the API server:
+
+```sh
+npm start
+```
+
+And you're ready to go!
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/TeamNoodle/doodle-society/issues)
 
 
 ## Contributing
