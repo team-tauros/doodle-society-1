@@ -25,9 +25,9 @@ function Upload({ user }) {
 
   const beginUpload = (tag) => {
     const uploadOptions = {
-      cloudName: process.env.CLOUDNAME,
+      cloudName: process.env.REACT_APP_CLOUDNAME,
       tags: [tag, 'anImage'],
-      uploadPreset: process.env.CLOUDPRESET,
+      uploadPreset: process.env.REACT_APP_CLOUDPRESET,
       cropping: 'true',
       croppingAspectRatio: 1,
       croppingCoordinatesMode: 'custom',

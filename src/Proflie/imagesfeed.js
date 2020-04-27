@@ -6,6 +6,7 @@ import './imagefeed.css';
 
 const moment = require('moment');
 
+
 const NormalImageFeed = ({
   imgs, user, doods, getAllDoods, allowDeletePicture, getImgs, setImgs,
 }) => {
@@ -36,7 +37,7 @@ const NormalImageFeed = ({
       .then(() => getImgs(user))
       .then((imgs) => setImgs(imgs.data));
   };
-
+  const history = useHistory();
   return (
     <div className="profile-feed">
       <div className="normal-img">
