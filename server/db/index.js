@@ -208,7 +208,6 @@ const getBio = (req) => {
 };
 
 module.exports = {
-  getUsers,
   getUserByGoogleId,
   getUserById,
   getUserByName,
