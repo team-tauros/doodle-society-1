@@ -57,7 +57,7 @@ Load up the schema by running:
 Create the trigrams extension in doodle database by running:
 
 ```sh
-CREATE EXTENSION pg_trgm
+CREATE EXTENSION pg_trgm;
 ```
 
 Create a Cloudinary account. Take note of your cloud name. Create an upload preset with ... Take note of its name as well. 
