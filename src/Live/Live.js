@@ -102,15 +102,18 @@ class Live extends Component {
 
   render() {
     return (
-      <canvas
-      // We use the ref attribute to get direct access to the canvas element. 
+      <div>
+        <h1>Live Doods Goes Here</h1>
+        <canvas
+        // We use the ref attribute to get direct access to the canvas element. 
         ref={(ref) => (this.canvas = ref)}
-        style={{ background: 'black' }}
+        style={{ background: 'black' }} // background image cycling
         onMouseDown={this.onMouseDown}
         onMouseLeave={this.endPaintEvent}
         onMouseUp={this.endPaintEvent}
         onMouseMove={this.onMouseMove}
-      />
+        />
+      </div>
     );
   }
 }
