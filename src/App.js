@@ -15,6 +15,7 @@ import NavigationBar from './Nav/nav';
 import Main from './Main/Main';
 import Search from './Friends/Search';
 import Profile from './Proflie/profile';
+import Map from './Map/Map';
 
 
 function App() {
@@ -248,6 +249,25 @@ function App() {
                   <Search
                     user={user}
                     getFriends={getFriends}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/map"
+              render={() => {
+                if (!user.id) {
+                  return (
+                    <Redirect to={{
+                      pathname: '/',
+                      back: '/map',
+                    }}
+                    />
+                  );
+                }
+                return (
+                  <Map
+                  // import stuff here
                   />
                 );
               }}
