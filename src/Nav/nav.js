@@ -34,7 +34,7 @@ const NavigationBar = ({
           <Nav.Item>
             <Link
               className="navlink"
-              to="/liveDoods"
+              to="/live"
             >
               LiveDoods
             </Link>
