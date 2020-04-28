@@ -105,6 +105,19 @@ const NormalImageFeed = ({
                   <img className="doodle" src={dood.url} alt="" />
                   <img className="bg-img" src={dood.original_url} alt="" />
                   <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
+                  <form>
+        <div>
+          <label htmlFor="to">To:</label>
+          <input
+             type="tel"
+             name="to"
+             id="to"
+          />
+        </div>
+        <button type="submit" placeholder="enter phone number">
+          Share Your Doodle!
+        </button>
+      </form>
                 </div>
               </div>
             </Carousel.Item>
