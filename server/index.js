@@ -3,6 +3,10 @@ require('dotenv').config();
 const path = require('path');
 const db = require('./db');
 const Pusher = require('pusher');
+const client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, '../build'),
@@ -259,3 +263,20 @@ fastify.post('/live', (req, res) => {
 });
 
 fastify.get('/*', (req, res) => res.sendFile('index.html'));
+
+fastify.post('/api/messages', (req, res) => {
+  res.header('Content-Type', 'application/json');
+  client.messages
+    .create({
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: req.body.to,
+      body: req.body.body
+    })
+    .then(() => {
+      res.send(JSON.stringify({ success: true }));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify({ success: false }));
+    });
+});
