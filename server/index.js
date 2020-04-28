@@ -8,6 +8,10 @@ fastify.register(require('fastify-static'), {
   root: path.join(__dirname, '../build'),
   wildcard: false,
 });
+fastify.register(require('fastify-xml-body-parser'));
+fastify.register(require('fastify-cors'), { 
+  origin: '*' 
+})
 
 const PORT = process.env.PORT || 4000;
 
