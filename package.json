@@ -25,6 +25,7 @@
     "moment": "^2.24.0",
     "pg": "^8.0.2",
     "pusher": "^3.0.1",
+    "pusher-js": "^6.0.0",
     "react": "^16.13.1",
     "react-alert": "^7.0.0",
     "react-alert-template-basic": "^1.0.0",
@@ -41,7 +42,8 @@
     "reactstrap": "^8.4.1",
     "semantic-ui-react": "^0.88.2",
     "sql-template-strings": "^2.2.2",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "uuid": "^7.0.3"
   },
   "scripts": {
     "start": "node server/index.js",
