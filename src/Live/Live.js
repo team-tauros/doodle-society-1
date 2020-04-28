@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import Pusher from 'pusher-js';
 
-class Canvas extends Component {
+class Live extends Component {
   constructor(props) {
     super(props);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -114,4 +114,4 @@ class Canvas extends Component {
     );
   }
 }
-export default Canvas;
+export default Live;
