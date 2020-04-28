@@ -16,6 +16,7 @@ import Main from './Main/Main';
 import Search from './Friends/Search';
 import Profile from './Proflie/profile';
 import Map from './Map/Map';
+import Live from './Live/Live';
 
 
 function App() {
@@ -267,6 +268,25 @@ function App() {
                 }
                 return (
                   <Map
+                  // import stuff here
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/live"
+              render={() => {
+                if (!user.id) {
+                  return (
+                    <Redirect to={{
+                      pathname: '/',
+                      back: '/live',
+                    }}
+                    />
+                  );
+                }
+                return (
+                  <Live
                   // import stuff here
                   />
                 );
