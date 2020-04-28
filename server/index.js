@@ -2,11 +2,16 @@ const fastify = require('fastify')({ logger: true });
 require('dotenv').config();
 const path = require('path');
 const db = require('./db');
+const Pusher = require('pusher');
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, '../build'),
   wildcard: false,
 });
+fastify.register(require('fastify-xml-body-parser'));
+fastify.register(require('fastify-cors'), { 
+  origin: '*' 
+})
 
 const PORT = process.env.PORT || 4000;
 
@@ -18,6 +23,13 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: 'us2',
+});
 
 start();
 
@@ -239,6 +251,11 @@ fastify.delete('/api/images/:imageId', (req, res) => {
       console.log(err);
       res.status(500).send();
     });
+});
+
+fastify.post('/live', (req, res) => {
+  pusher.trigger('painting', 'draw', req.body);
+  res.send(req.body);
 });
 
 fastify.get('/*', (req, res) => res.sendFile('index.html'));
