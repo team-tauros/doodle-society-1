@@ -268,7 +268,7 @@ function App() {
                 }
                 return (
                   <Map
-                  // import stuff here
+                  doods={doods}
                   />
                 );
               }}
