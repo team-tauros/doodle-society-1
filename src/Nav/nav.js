@@ -31,6 +31,15 @@ const NavigationBar = ({
           <Nav.Item>
             <Link className="navlink" to="/home" onClick={getAllDoods}>Home</Link>
           </Nav.Item>
+          {/* added in the map Nav.Item here */}
+          <Nav.Item>
+            <Link
+              className="navlink"
+              to="/map"
+            >
+              Map
+            </Link>
+          </Nav.Item>
           <Nav.Item>
             <Link
               className="navlink"
