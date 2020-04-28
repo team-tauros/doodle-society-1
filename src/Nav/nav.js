@@ -34,9 +34,9 @@ const NavigationBar = ({
           <Nav.Item>
             <Link
               className="navlink"
-              to="/live"
+              to="/liveDoods"
             >
-              Live
+              LiveDoods
             </Link>
           </Nav.Item>
           {/* added in the map Nav.Item here */}
