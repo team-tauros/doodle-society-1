@@ -2,6 +2,7 @@ const fastify = require('fastify')({ logger: true });
 require('dotenv').config();
 const path = require('path');
 const db = require('./db');
+const Pusher = require('pusher');
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, '../build'),
@@ -18,6 +19,13 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: 'us2',
+});
 
 start();
 
