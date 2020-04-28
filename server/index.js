@@ -249,4 +249,9 @@ fastify.delete('/api/images/:imageId', (req, res) => {
     });
 });
 
+fastify.post('/live', (req, res) => {
+  pusher.trigger('painting', 'draw', req.body);
+  res.send(req.body);
+});
+
 fastify.get('/*', (req, res) => res.sendFile('index.html'));
