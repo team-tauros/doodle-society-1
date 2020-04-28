@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import Pusher from 'pusher-js';
 
-class Live extends Component {
+class LiveDoods extends Component {
   constructor(props) {
     super(props);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -114,4 +114,4 @@ class Live extends Component {
     );
   }
 }
-export default Live;
+export default LiveDoods;
