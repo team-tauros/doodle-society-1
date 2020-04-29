@@ -9,6 +9,8 @@ class Live extends Component {
     super(props);
     this.state = {
       images: [],
+      image: 'https://i.ytimg.com/vi/fQ_3gYuLzuo/maxresdefault.jpg',
+      count: 0,
     };
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -18,6 +20,7 @@ class Live extends Component {
     });
     this.getAllImages = this.getAllImages.bind(this);
     this.setCanvas = this.setCanvas.bind(this);
+    this.nextImage = this.nextImage.bind(this);
   }
 
   isPainting = false;
@@ -119,6 +122,22 @@ class Live extends Component {
       .catch((err) => console.error(err));
   };
 
+  nextImage() {
+    let i = this.state.count;
+    i++;
+    if(this.state.images[i]){
+      this.setState({
+        image: this.state.images[i].url,
+        count: i,
+      })
+    } else {
+      this.setState({
+        image: this.state.images[0].url,
+        count: 0,
+      })
+    }
+  }
+
   setCanvas() {
     this.canvas.width = 1000;
     this.canvas.height = 800;
@@ -138,44 +157,47 @@ class Live extends Component {
   }
 
   render() {
-    const { images } = this.state;
+    const { images, image } = this.state;
     // console.log('this is', images);
     return (
       <div>
-        <h1>Live Doods</h1>
-        <canvas
-        // We use the ref attribute to get direct access to the canvas element. 
-        ref={(ref) => (this.canvas = ref)}
-        style={{  
-          backgroundImage: "url(" + "http://res.cloudinary.com/chryen/image/upload/v1588111220/doodle/tvapjurkprfioxdz0p5d.jpg" + ")",
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
-        }}
-        onMouseDown={this.onMouseDown}
-        onMouseLeave={this.endPaintEvent}
-        onMouseUp={this.endPaintEvent}
-        onMouseMove={this.onMouseMove}
-        />
-        {/* {images.map((image) => {
-          this.setCanvas();
-          return (
-            <canvas
-            // We use the ref attribute to get direct access to the canvas element. 
-            ref={(ref) => (this.canvas = ref)}
-            style={{  
-              backgroundImage: `url('${image.url}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat'
-            }}
-            onMouseDown={this.onMouseDown}
-            onMouseLeave={this.endPaintEvent}
-            onMouseUp={this.endPaintEvent}
-            onMouseMove={this.onMouseMove}
-            />
-          )
-        })} */}
+        <div>
+          <h1>Live Doods</h1>
+          <canvas
+          // We use the ref attribute to get direct access to the canvas element. 
+          ref={(ref) => (this.canvas = ref)}
+          style={{  
+            backgroundImage: `url('${image}')`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}
+          onMouseDown={this.onMouseDown}
+          onMouseLeave={this.endPaintEvent}
+          onMouseUp={this.endPaintEvent}
+          onMouseMove={this.onMouseMove}
+          />
+          {/* {images.map((image) => {
+            this.setCanvas();
+            return (
+              <canvas
+              // We use the ref attribute to get direct access to the canvas element. 
+              ref={(ref) => (this.canvas = ref)}
+              style={{  
+                backgroundImage: `url('${image.url}')`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}
+              onMouseDown={this.onMouseDown}
+              onMouseLeave={this.endPaintEvent}
+              onMouseUp={this.endPaintEvent}
+              onMouseMove={this.onMouseMove}
+              />
+              )
+            })} */}
+          </div>
+        <button onClick={this.nextImage}>New Image</button>
       </div>
     );
   }
