@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 } from 'uuid';
+import axios from 'axios';
 import Pusher from 'pusher-js';
 import { Carousel } from 'react-bootstrap';
 
@@ -12,6 +13,7 @@ class Live extends Component {
     this.pusher = new Pusher('4d4166c393ed3879b662', {
       cluster: 'us2',
     });
+    this.getAllImages = this.getAllImages.bind(this);
   }
 
   isPainting = false;
@@ -100,6 +102,14 @@ class Live extends Component {
       }
     });
   }
+
+  getAllImages() {
+    axios.get('/api/images')
+      .then((res) => {
+
+      })
+      .catch((err) => console.error(err));
+  };
 
   render() {
     return (
