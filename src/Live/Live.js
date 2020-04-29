@@ -101,12 +101,13 @@ class Live extends Component {
         });
       }
     });
+    this.getAllImages();
   }
 
   getAllImages() {
     axios.get('/api/images')
       .then((res) => {
-
+        console.log(res.data);
       })
       .catch((err) => console.error(err));
   };
