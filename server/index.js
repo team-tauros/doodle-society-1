@@ -13,8 +13,8 @@ fastify.register(require('fastify-static'), {
   wildcard: false,
 });
 fastify.register(require('fastify-xml-body-parser'));
-fastify.register(require('fastify-cors'), { 
-  origin: '*' 
+fastify.register(require('fastify-cors'), {
+  origin: '*'
 })
 
 const PORT = process.env.PORT || 4000;

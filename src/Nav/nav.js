@@ -34,6 +34,17 @@ const NavigationBar = ({
           <Nav.Item>
             <Link
               className="navlink"
+              to={{
+                pathname: '/chat',
+                user,
+              }}
+            >
+              Chat
+            </Link>
+          </Nav.Item>          
+          <Nav.Item>
+            <Link
+              className="navlink"
               to="/live"
             >
               LiveDoods
