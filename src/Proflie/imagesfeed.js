@@ -16,7 +16,15 @@ const NormalImageFeed = ({
 
 
   const textMessage = () =>{
-    console.log(message);
+    if (message.to.length === 10 && message.body){
+      axios.post('/api/messages', message)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    } else {window.alert("Please use a valid phone number.")}
   }
   //  delete a doodle
   const deleteDoodle = (id) => {
@@ -117,7 +125,7 @@ const NormalImageFeed = ({
           type="tel"
           name="to"
           id="to"
-          placeholder="enter phone number"
+          placeholder="phone# ex: 1234567890"
           onChange={(event) => setMessage({to: event.target.value, body: dood.url})
           }
         />
