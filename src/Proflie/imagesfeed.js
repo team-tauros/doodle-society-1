@@ -12,6 +12,12 @@ const NormalImageFeed = ({
 }) => {
   const [imgIndex, setImgIndex] = useState(0);
   const [doodIndex, setDoodIndex] = useState(0);
+  const [message, setMessage] = useState({to: "", body:""});
+
+
+  const textMessage = () =>{
+    console.log(message);
+  }
   //  delete a doodle
   const deleteDoodle = (id) => {
     //  set active index of doodle carousel to 0
@@ -22,7 +28,6 @@ const NormalImageFeed = ({
         getAllDoods();
       });
   };
-
   //  handle doodle carousel selection
   const handleSelectDood = (i) => setDoodIndex(i);
   //  handle image carousel selection
@@ -113,10 +118,11 @@ const NormalImageFeed = ({
           name="to"
           id="to"
           placeholder="enter phone number"
-          body={dood.url}
+          onChange={(event) => setMessage({to: event.target.value, body: dood.url})
+          }
         />
       </div>
-        <button type="submit">
+        <button type="button" onClick={()=> textMessage()}>
           Share Your Doodle!
         </button>
       </form>
