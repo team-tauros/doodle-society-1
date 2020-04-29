@@ -209,7 +209,7 @@ const getBio = (req) => {
 
 //  get all images from database
 const getAllUploads = (req) => {
-  return pool.query('SELECT * FROM images');
+  return pool.query('SELECT url FROM images');
 };
 
 module.exports = {
