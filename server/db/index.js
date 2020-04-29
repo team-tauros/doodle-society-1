@@ -207,6 +207,11 @@ const getBio = (req) => {
   return pool.query('SELECT * FROM bios WHERE user_id = $1', [userId]);
 };
 
+//  get all images from database
+const getAllUploads = (req) => {
+  return pool.query('SELECT * FROM images');
+};
+
 module.exports = {
   getUserByGoogleId,
   getUserById,
@@ -230,4 +235,5 @@ module.exports = {
   getBio,
   deleteDoodle,
   deleteImage,
+  getAllUploads
 };
