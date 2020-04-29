@@ -9,7 +9,7 @@ class Live extends Component {
     super(props);
     this.state = {
       images: [],
-      image: 'https://i.ytimg.com/vi/fQ_3gYuLzuo/maxresdefault.jpg',
+      image: 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg',
       count: 0,
     };
     this.onMouseDown = this.onMouseDown.bind(this);
