@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import Pusher from 'pusher-js';
+import { Carousel } from 'react-bootstrap';
 
 class Live extends Component {
   constructor(props) {
@@ -103,7 +104,7 @@ class Live extends Component {
   render() {
     return (
       <div>
-        <h1>Live Doods Goes Here</h1>
+        <h1>Live Doods</h1>
         <canvas
         // We use the ref attribute to get direct access to the canvas element. 
         ref={(ref) => (this.canvas = ref)}
@@ -113,6 +114,19 @@ class Live extends Component {
         onMouseUp={this.endPaintEvent}
         onMouseMove={this.onMouseMove}
         />
+        {/* <Carousel id="doodles" activeIndex={doodIndex} interval={null}>
+          {doods[user.id] && doods[user.id].map((dood) => (
+            <Carousel.Item>
+              <div key={dood.id}>
+                <div className="doodle-img-container">
+                  <img className="doodle" src={dood.url} alt="" />
+                  <img className="bg-img" src={dood.original_url} alt="" />
+                </div>
+              </div>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+        </canvas> */}
       </div>
     );
   }
