@@ -15,6 +15,7 @@ import NavigationBar from './Nav/nav';
 import Main from './Main/Main';
 import Search from './Friends/Search';
 import Profile from './Proflie/profile';
+import Chat from './Chat/Chat';
 import Map from './Map/Map';
 import Live from './Live/Live';
 
@@ -250,6 +251,24 @@ function App() {
                   <Search
                     user={user}
                     getFriends={getFriends}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/chat"
+              render={() => {
+                if (!user.id) {
+                  return (
+                    <Redirect to={{
+                      pathname: '/',
+                      back: '/chat',
+                    }}
+                    />
+                  );
+                }
+                return (
+                  <Chat
                   />
                 );
               }}
