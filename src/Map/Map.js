@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
-import { GoogleMap, LoadScript, Marker, InfoWindow, Data } from '@react-google-maps/api'
+import React, { useState, Fragment } from 'react'
+import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api'
 
 const Map = ({ doods }) => {
   const [ selectedDoodle, setSelectedDoodle ] = useState(null);
+  const [mapRef, setMapRef] = useState(null);
+  const [center] = useState({ lat: 29.971065, lng: -90.101533 });
+
+
   const fakeDoods = [
     {
       id: 0,
@@ -36,55 +40,79 @@ const Map = ({ doods }) => {
     },
   ];
 
-  return (
-    <LoadScript
-      id="script-loader"
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE_KEY}
-    >
-      <GoogleMap
-        id='example-map'
-        mapContainerStyle={{
-          height: "90vh",
-          width: "90vw",
-          margin: "auto",
-        }}
+  const fakeMarkers = [
+    {
+      coords: {lat: 29.871065, lng: -90.141533}
+    },
+    {
+      coords: {lat: 29.911065, lng: -90.121533}
+    },
+    {
+      coords: {lat: 29.931065, lng: -90.071533}
+    },
 
-        // view what doods data is available
-        onLoad={() => { console.log(doods) }}
+  ];
 
-        zoom={12}
-        center={{
-          lat: 29.971065,
-          lng: -90.101533
-        }}
-      >
-        <h1>Doodle Map</h1>
-        {fakeDoods.map((dood) => (
-          <Marker
-            key={dood.id}
-            position={dood.position}
-            onClick={() => {
-              setSelectedDoodle(dood)
-            }}
-          />
-        ))}
-        {selectedDoodle && (
-          <InfoWindow
-            position={selectedDoodle.position}
-            onCloseClick={() => {
-              setSelectedDoodle(null)
-            }}
-          >
-            <div>
-              <h6>{selectedDoodle.username}</h6>
-                <img style={{height: "15vh", width: "auto"}} className="doodle" src={selectedDoodle.url} alt="" />
-                <img style={{height: "15vh", width: "auto"}} className="bg-img" src={selectedDoodle.original_url} alt="" />
-            </div>
-          </InfoWindow>
-        )}
-      </GoogleMap>
-    </LoadScript>
-  )
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY
+  });
+
+  const logTheCurrentCenter = () =>{
+    console.log(mapRef.center.toJSON());
+  }
+
+  const renderMap = () => {
+    return (
+      <Fragment>
+        <GoogleMap
+          id='example-map'
+          mapContainerStyle={{
+            height: "90vh",
+            width: "90vw",
+            margin: "auto",
+          }}
+          zoom={12}
+          center={center}
+          onClick={e => e}
+          onLoad={map => {
+            setMapRef(map)
+            console.log("doods: " + doods)
+          }}
+        >
+          <h1>Doodle Map</h1>
+          {fakeDoods.map((dood) => (
+            <Marker
+              key={dood.id}
+              position={dood.position}
+              onClick={() => {
+                setSelectedDoodle(dood)
+              }}
+            />
+          ))}
+          {fakeMarkers.map((marker) => (
+            <Marker
+            position={marker.coords}
+            />
+          ))}
+          {selectedDoodle && (
+            <InfoWindow
+              position={selectedDoodle.position}
+              onCloseClick={() => {
+                setSelectedDoodle(null)
+              }}
+            >
+              <div>
+                <h6>{selectedDoodle.username}</h6>
+                  <img style={{height: "15vh", width: "auto"}} className="doodle" src={selectedDoodle.url} alt="" />
+                  <img style={{height: "15vh", width: "auto"}} className="bg-img" src={selectedDoodle.original_url} alt="" />
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </Fragment>
+    )
+  }
+  return isLoaded ? renderMap() : null;
 }
 
 export default Map
