@@ -5,6 +5,7 @@ const Map = ({ doods }) => {
   const [ selectedDoodle, setSelectedDoodle ] = useState(null);
   const [mapRef, setMapRef] = useState(null);
   const [center] = useState({ lat: 29.971065, lng: -90.101533 });
+  const [fakeDoodMarkers, setFakeDoodMarkers] = useState([]);
 
 
   const fakeDoods = [
@@ -42,13 +43,13 @@ const Map = ({ doods }) => {
 
   const fakeMarkers = [
     {
-      coords: {lat: 29.871065, lng: -90.141533}
+      coords: {lat: 29.901065, lng: -90.141533}
     },
     {
       coords: {lat: 29.911065, lng: -90.121533}
     },
     {
-      coords: {lat: 29.931065, lng: -90.071533}
+      coords: {lat: 29.921065, lng: -90.071533}
     },
 
   ];
@@ -59,6 +60,12 @@ const Map = ({ doods }) => {
 
   const logTheCurrentCenter = () =>{
     console.log(mapRef.center.toJSON());
+  }
+
+  const createMarker = (e) => {
+    setFakeDoodMarkers((fakeDoodMarkers) => [...fakeDoodMarkers, {coords: { lat: fakeDoodMarkers[fakeDoodMarkers.length - 1].coords.lat + 0.03, lng: -90.101533 }}] )
+    console.log("click: " + e);
+    console.log(fakeDoodMarkers);
   }
 
   const renderMap = () => {
@@ -73,9 +80,10 @@ const Map = ({ doods }) => {
           }}
           zoom={12}
           center={center}
-          onClick={e => e}
+          onClick={e => createMarker(e)}
           onLoad={map => {
             setMapRef(map)
+            setFakeDoodMarkers(fakeMarkers)
             console.log("doods: " + doods)
           }}
         >
@@ -89,7 +97,7 @@ const Map = ({ doods }) => {
               }}
             />
           ))}
-          {fakeMarkers.map((marker) => (
+          {fakeDoodMarkers.map((marker) => (
             <Marker
             position={marker.coords}
             />
