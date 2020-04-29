@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { v4 } from 'uuid';
+import axios from 'axios';
 import Pusher from 'pusher-js';
+import { Carousel } from 'react-bootstrap';
 
 class Live extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      images: [],
+      image: 'https://i.ytimg.com/vi/fQ_3gYuLzuo/maxresdefault.jpg',
+      count: 0,
+    };
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.endPaintEvent = this.endPaintEvent.bind(this);
     this.pusher = new Pusher('4d4166c393ed3879b662', {
       cluster: 'us2',
     });
+    this.getAllImages = this.getAllImages.bind(this);
+    this.setCanvas = this.setCanvas.bind(this);
+    this.nextImage = this.nextImage.bind(this);
   }
 
   isPainting = false;
@@ -82,6 +92,7 @@ class Live extends Component {
   }
 
   componentDidMount() {
+    this.getAllImages();
     // Here we set up the properties of the canvas element. 
     this.canvas.width = 1000;
     this.canvas.height = 800;
@@ -100,17 +111,94 @@ class Live extends Component {
     });
   }
 
+  getAllImages() {
+    axios.get('/api/images')
+      .then((res) => {
+        this.setState({
+          images: res.data,
+        })
+        console.log(this.state.images)
+      })
+      .catch((err) => console.error(err));
+  };
+
+  nextImage() {
+    let i = this.state.count;
+    i++;
+    if(this.state.images[i]){
+      this.setState({
+        image: this.state.images[i].url,
+        count: i,
+      })
+    } else {
+      this.setState({
+        image: this.state.images[0].url,
+        count: 0,
+      })
+    }
+  }
+
+  setCanvas() {
+    this.canvas.width = 1000;
+    this.canvas.height = 800;
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.lineJoin = 'round';
+    this.ctx.lineCap = 'round';
+    this.ctx.lineWidth = 5;
+    const channel = this.pusher.subscribe('painting');
+    channel.bind('draw', (data) => {
+      const { userId, line } = data;
+      if (userId !== this.userId) {
+        line.forEach((position) => {
+          this.paint(position.start, position.stop, this.guestStrokeStyle);
+        });
+      }
+    });
+  }
+
   render() {
+    const { images, image } = this.state;
+    // console.log('this is', images);
     return (
-      <canvas
-      // We use the ref attribute to get direct access to the canvas element. 
-        ref={(ref) => (this.canvas = ref)}
-        style={{ background: 'black' }}
-        onMouseDown={this.onMouseDown}
-        onMouseLeave={this.endPaintEvent}
-        onMouseUp={this.endPaintEvent}
-        onMouseMove={this.onMouseMove}
-      />
+      <div>
+        <div>
+          <h1>Live Doods</h1>
+          <canvas
+          // We use the ref attribute to get direct access to the canvas element. 
+          ref={(ref) => (this.canvas = ref)}
+          style={{  
+            backgroundImage: `url('${image}')`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}
+          onMouseDown={this.onMouseDown}
+          onMouseLeave={this.endPaintEvent}
+          onMouseUp={this.endPaintEvent}
+          onMouseMove={this.onMouseMove}
+          />
+          {/* {images.map((image) => {
+            this.setCanvas();
+            return (
+              <canvas
+              // We use the ref attribute to get direct access to the canvas element. 
+              ref={(ref) => (this.canvas = ref)}
+              style={{  
+                backgroundImage: `url('${image.url}')`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}
+              onMouseDown={this.onMouseDown}
+              onMouseLeave={this.endPaintEvent}
+              onMouseUp={this.endPaintEvent}
+              onMouseMove={this.onMouseMove}
+              />
+              )
+            })} */}
+          </div>
+        <button onClick={this.nextImage}>New Image</button>
+      </div>
     );
   }
 }
