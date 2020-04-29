@@ -280,3 +280,13 @@ fastify.post('/api/messages', (req, res) => {
       res.send(JSON.stringify({ success: false }));
     });
 });
+
+fastify.get('/api/images', (req, res) => {
+  //  get all uploads
+  db.getAllUploads(req, res)
+    .then((images) => res.status(200).send(images.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
