@@ -147,6 +147,11 @@ function Canvas(props) {
           <Button variant="warning" onClick={redo}>Redo</Button>
         </div>
         <div className="Doodle-caption">
+
+          {/* add submit pin map here */}
+          <h5 style={{ "background-color": "white", margin: "10px" }}>Where is your doodle from?</h5>
+          <h2 style={{ height: "40vh", width: "auto", margin: "10px" }}>insert small map here</h2>
+
         <input id="caption" type="text" placeholder="Caption your doodle!"/>
         {saving && 
           <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||
