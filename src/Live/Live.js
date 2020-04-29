@@ -108,25 +108,17 @@ class Live extends Component {
         <canvas
         // We use the ref attribute to get direct access to the canvas element. 
         ref={(ref) => (this.canvas = ref)}
-        style={{ background: 'black' }} // background image cycling
+        style={{  
+          backgroundImage: "url(" + "http://res.cloudinary.com/chryen/image/upload/v1588111220/doodle/tvapjurkprfioxdz0p5d.jpg" + ")",
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
         onMouseDown={this.onMouseDown}
         onMouseLeave={this.endPaintEvent}
         onMouseUp={this.endPaintEvent}
         onMouseMove={this.onMouseMove}
         />
-        {/* <Carousel id="doodles" activeIndex={doodIndex} interval={null}>
-          {doods[user.id] && doods[user.id].map((dood) => (
-            <Carousel.Item>
-              <div key={dood.id}>
-                <div className="doodle-img-container">
-                  <img className="doodle" src={dood.url} alt="" />
-                  <img className="bg-img" src={dood.original_url} alt="" />
-                </div>
-              </div>
-            </Carousel.Item>
-          ))}
-        </Carousel>
-        </canvas> */}
       </div>
     );
   }
