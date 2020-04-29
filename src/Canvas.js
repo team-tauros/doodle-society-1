@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import 'fabric-history';
+import SmallMap from './Map/SmallMap';
 
 //  declare global canvas variable
 let canvas;
@@ -146,12 +147,16 @@ function Canvas(props) {
           <Button variant="primary" onClick={undo}>Undo</Button>
           <Button variant="warning" onClick={redo}>Redo</Button>
         </div>
-        <div className="Doodle-caption">
-        <input id="caption" type="text" placeholder="Caption your doodle!"/>
-        {saving && 
-          <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||
-          <Button variant="success" onClick={save} >Save</Button>
-        }   
+
+        {/* <div className="Doodle-caption"> removing class from caption */}
+        <div style={{"margin-bottom": "20px"}}>
+          <h5 style={{ "background-color": "white", "margin-top": "10px" }}>Where is your doodle from?</h5>
+          <SmallMap />
+          <input id="caption" type="text" placeholder="Caption your doodle!"/>
+          {saving &&
+            <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||
+            <Button variant="success" onClick={save} >Save</Button>
+          }
         </div>
       </div>
       <div className="canvas-container" id="canvas-container">
