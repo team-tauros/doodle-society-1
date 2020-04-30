@@ -17,6 +17,7 @@ const NormalImageFeed = ({
 
   const textMessage = () =>{
     if (message.to.length === 10 && message.body){
+      message.to = "+1" + message.to;
       axios.post('/api/messages', message)
       .then(function (response) {
         console.log(response);
