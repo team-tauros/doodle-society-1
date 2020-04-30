@@ -16,7 +16,6 @@ const NormalImageFeed = ({
 
 
   const textMessage = () =>{
-    if (message.to.length === 10 && message.body){
       message.to = "+1" + message.to;
       axios.post('/api/messages', message)
       .then(function (response) {
@@ -25,7 +24,6 @@ const NormalImageFeed = ({
       .catch(function (error) {
         console.log(error);
       });
-    } else {window.alert("Please use a valid phone number.")}
   }
   //  delete a doodle
   const deleteDoodle = (id) => {
