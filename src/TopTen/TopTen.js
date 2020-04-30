@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const Styles = styled.div`
@@ -25,25 +26,50 @@ const Styles = styled.div`
   }
 `;
 
-const Comments = ({ doods }) => {
+const TopTen = ({ doods, getDoods }) => {
+  const [ allDoodsInDB, setAllDoodsInDB ] = useState(null);
+  const [ stillLoading, setStillLoading ] = useState(true);
+  const [ isLoaded, setIsLoaded ] = useState(false);
+
+  // retrieves all usernames from DB
+  const getAllUsers = () => axios.get(`/api/users`);
+
+  // get all doods from DB
+  const getAllDoodsFromDB = () => {
+    getAllUsers()
+      .then((res) => {
+        return Promise.all(res.data.map(user => getDoods(user)))
+          .then((allDoods) => {
+            // console.log(allDoods);
+            setAllDoodsInDB(allDoods)
+            setIsLoaded(true)
+          })
+      })
+      .catch(err => err);
+  }
+
   // orders all user and user's friends doods by like count
   const orderByLikes = () => {
     const allDoods = [];
-    Object.values(doods).forEach(user => {
-          user.length === 1 ?
-            allDoods.push(user[0]) :
-            user.forEach(dood => allDoods.push(dood))
+    // Object.values(allDoodsInDB).forEach(user => {
+    allDoodsInDB.forEach(user => {
+          user.data.length === 1 ?
+            allDoods.push(user.data[0]) :
+            user.data.forEach(dood => allDoods.push(dood))
         })
       return allDoods.sort((a, b) => b.count - a.count);
     }
 
-  console.dir(orderByLikes())
-  return (
+  useEffect(() => {
+    getAllDoodsFromDB()
+  })
+
+  const renderList = () => (
     <Styles>
       <div className="list text-left">
             <h1 className="test" >Top Doodles</h1>
             <ol>
-              {doods[1] && (orderByLikes().map((dood, i) => {
+              {allDoodsInDB[0] && (orderByLikes().map((dood, i) => {
               if(i < 10) {
               return (
                 <li className="listItem" >
@@ -83,6 +109,8 @@ const Comments = ({ doods }) => {
       </div>
     </Styles>
   )
+
+  return isLoaded ? renderList() : null;
 };
 
-export default Comments;
+export default TopTen;
