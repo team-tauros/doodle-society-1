@@ -58,3 +58,5 @@ CREATE TABLE bios (
   bio VARCHAR(500),
   user_id int NOT NULL
 );
+
+INSERT INTO doodles (url, caption, original_id, doodler_id, lat, lng) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 'blank canvas', 1, 1, null, null);
