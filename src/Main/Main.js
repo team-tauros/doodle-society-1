@@ -25,6 +25,7 @@ const Home = ({
 
   const textMessage = () =>{
       message.to = "+1" + message.to;
+      document.getElementById("twilio-form").reset();
       axios.post('/api/messages', message)
       .then(function (response) {
         console.log(response);
@@ -102,7 +103,7 @@ const Home = ({
             setFriends={setFriends}
           />
         </div>
-        <form>
+        <form id="twilio-form">
       <div>
         <label htmlFor="to">Invite Your Friends</label>
         <input
