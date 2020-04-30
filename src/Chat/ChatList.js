@@ -15,7 +15,7 @@ export default ({ chats }) => (
                   </p>
                   <p>{chat.message}</p>
                 </div>
-                <div>   
+                <div className="imageHolder">
               </div>
               </div>
             </div>
