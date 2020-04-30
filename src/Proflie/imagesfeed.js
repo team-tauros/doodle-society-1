@@ -12,19 +12,7 @@ const NormalImageFeed = ({
 }) => {
   const [imgIndex, setImgIndex] = useState(0);
   const [doodIndex, setDoodIndex] = useState(0);
-  const [message, setMessage] = useState({to: "", body:""});
 
-
-  const textMessage = () =>{
-      message.to = "+1" + message.to;
-      axios.post('/api/messages', message)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
   //  delete a doodle
   const deleteDoodle = (id) => {
     //  set active index of doodle carousel to 0
@@ -117,22 +105,6 @@ const NormalImageFeed = ({
                   <img className="doodle" src={dood.url} alt="" />
                   <img className="bg-img" src={dood.original_url} alt="" />
                   <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
-                  <form>
-      <div>
-        <label htmlFor="to">Text It!:</label>
-        <input
-          type="tel"
-          name="to"
-          id="to"
-          placeholder="phone# ex: 1234567890"
-          onChange={(event) => setMessage({to: event.target.value, body: dood.url})
-          }
-        />
-      </div>
-        <button type="button" onClick={()=> textMessage()}>
-          Share Your Doodle!
-        </button>
-      </form>
                 </div>
               </div>
             </Carousel.Item>
