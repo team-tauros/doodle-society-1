@@ -7,6 +7,7 @@ import Comments from '../Comments/CommentForm';
 import Search from '../Friends/Search';
 import Upload from '../Upload';
 import Button from 'react-bootstrap/Button'
+import TopTen from '../TopTen/TopTen'
 
 const moment = require('moment');
 //  main feed
@@ -118,6 +119,7 @@ const Home = ({
         </button>
       </form>
       </div>
+      <TopTen doods={doods} />
       <div className="main">
         {orderDoods().slice(0, numDoods).map((dood) => {
           const doodler = dood.username === user.name ? user
