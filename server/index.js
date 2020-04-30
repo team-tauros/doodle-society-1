@@ -290,3 +290,10 @@ fastify.get('/api/images', (req, res) => {
       res.status(500).send();
     });
 });
+
+fastify.post('/message', (req, res) => {
+  console.log('connected with server')
+  const payload = req.body;
+  pusher.trigger('chat', 'message', payload);
+  res.send(payload)
+});
