@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, useReducer, useEffect } from 'react';
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
+import './Chat.css';
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: '',
-      username: '',
+      username: props.user.name,
       chats: []
     };
   }
 
   componentDidMount() {
-    const username = window.prompt('Username: ', 'Anonymous');
-    this.setState({ username });
     const pusher = new Pusher('5f62025ddf3789ba4978', {
       cluster: 'us2',
     });
