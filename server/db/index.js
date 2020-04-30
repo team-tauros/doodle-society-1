@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: process.env.DBUSER,
-  host: process.env.DBHOST || 'localhost',
-  database: 'doodle',
-  password: process.env.DBPASS,
+  user: process.env.RDS_USERNAME,
+  host: process.env.RDS_HOSTNAME || 'localhost',
+  database: process.env.RDS_DB_NAME || 'doodle',
+  password: process.env.RDS_PASSWORD,
   port: 5432,
   ssl: process.env.SSL || false,
 });
