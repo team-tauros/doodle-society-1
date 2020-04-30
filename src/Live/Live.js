@@ -3,6 +3,8 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import { Carousel } from 'react-bootstrap';
+import { store } from 'react-notifications-component';
+import Button from 'react-bootstrap/Button';
 
 class Live extends Component {
   constructor(props) {
@@ -125,7 +127,7 @@ class Live extends Component {
   nextImage() {
     let i = this.state.count;
     i++;
-    if(this.state.images[i]){
+    if (this.state.images[i]){
       this.setState({
         image: this.state.images[i].url,
         count: i,
@@ -168,6 +170,7 @@ class Live extends Component {
           ref={(ref) => (this.canvas = ref)}
           style={{  
             backgroundImage: `url('${image}')`,
+            // backgroundImage: `url('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg')`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'
@@ -176,6 +179,8 @@ class Live extends Component {
           onMouseLeave={this.endPaintEvent}
           onMouseUp={this.endPaintEvent}
           onMouseMove={this.onMouseMove}
+          className="canvas2"
+          id="canvas2" 
           />
           {/* {images.map((image) => {
             this.setCanvas();
@@ -197,7 +202,7 @@ class Live extends Component {
               )
             })} */}
           </div>
-        <button onClick={this.nextImage}>New Image</button>
+        <Button onClick={this.nextImage}>New Image</Button> 
       </div>
     );
   }
