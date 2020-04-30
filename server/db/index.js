@@ -135,10 +135,12 @@ const addDoodle = (req) => {
     caption,
     original_id,
     doodler_id,
+    lat,
+    lng,
   } = req.body;
 
-  return pool.query('INSERT INTO doodles (url, caption, original_id, doodler_id) VALUES ($1, $2, $3, $4) RETURNING id',
-    [url, caption, original_id, doodler_id]);
+  return pool.query('INSERT INTO doodles (url, caption, original_id, doodler_id, lat, lng) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+    [url, caption, original_id, doodler_id, lat, lng]);
 };
 
 //  like a doodle

@@ -19,6 +19,7 @@ function Canvas(props) {
   } = props;
   const [brushColor, setBrushColor] = useState('blue');
   const [saving, setSaving] = useState(false);
+  const [coords, setCoords] = useState({ lat: 29.971065, lng: -90.101533 });
   
   useEffect(() => {
     canvas = new fabric.Canvas('canvas', {
@@ -78,6 +79,7 @@ function Canvas(props) {
   };
   //  save a doodle
   const save = () => {
+    const { lat, lng } = coords;
     //  set saving state to true while doodle is saving
     setSaving(true);
     //  get data url for doodle from canvas
@@ -86,7 +88,7 @@ function Canvas(props) {
     const caption = document.getElementById('caption').value;
     //  post doodle info to server
     axios.post('/api/doodles', {
-      url: dataUrl, caption, original_id, doodler_id: user.id,
+      url: dataUrl, caption, original_id, doodler_id: user.id, lat, lng,
     })
       .then(() => {
         getAllDoods();  //  refresh doodles
@@ -150,8 +152,16 @@ function Canvas(props) {
 
         {/* <div className="Doodle-caption"> removing class from caption */}
         <div style={{"margin-bottom": "20px"}}>
-          <h5 style={{ "background-color": "white", "margin-top": "10px" }}>Where is your doodle from?</h5>
-          <SmallMap />
+          <h5 style={{
+            "backgroundColor": "purple",
+            "color": "white",
+            "marginTop": "30px",
+            "marginBottom": "0px",
+            "border": "solid white 1px",
+            "borderRadius": "10px",
+            }}>Where is your doodle from?</h5>
+          <SmallMap coords={coords} setCoords={setCoords} />
+
           <input id="caption" type="text" placeholder="Caption your doodle!"/>
           {saving &&
             <img src={process.env.PUBLIC_URL + '/spinner.gif'} className="spinner" /> ||

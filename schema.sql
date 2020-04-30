@@ -33,6 +33,8 @@ CREATE TABLE doodles (
   caption VARCHAR(255),
   original_id int NOT NULL,
   doodler_id int NOT NULL,
+  lat numeric (15, 11),
+  lng numeric (15, 11),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   count int DEFAULT 0 NOT NULL 
 );
