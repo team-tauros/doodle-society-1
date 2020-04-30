@@ -161,7 +161,7 @@ class Live extends Component {
 
   save() {
     const {
-      original_id, user, getAllDoods,
+      user, getAllDoods,
     } = this.props;
     const options = {
       title: 'SUCCESS!',
@@ -179,7 +179,7 @@ class Live extends Component {
     //  get entered caption
     //  post doodle info to server
     axios.post('/api/doodles', {
-      url: dataUrl, caption: 'live doodle', original_id: 1, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
+      url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
     })
       .then(() => {
         getAllDoods();  //  refresh doodles
