@@ -257,7 +257,7 @@ function App() {
             />
             <Route
               path="/chat"
-              render={() => {
+              render={(props) => {
                 if (!user.id) {
                   return (
                     <Redirect to={{
@@ -267,8 +267,10 @@ function App() {
                     />
                   );
                 }
+                const chatUser = props.location.user || user;
                 return (
                   <Chat
+                  user={chatUser}
                   />
                 );
               }}
