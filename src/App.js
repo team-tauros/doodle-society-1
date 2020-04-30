@@ -296,7 +296,7 @@ function App() {
             />
             <Route
               path="/live"
-              render={() => {
+              render={(props) => {
                 if (!user.id) {
                   return (
                     <Redirect to={{
@@ -308,7 +308,9 @@ function App() {
                 }
                 return (
                   <Live
-                  // import stuff here
+                    user={user}
+                    original_id={props.location.original_id}
+                    getAllDoods={getAllDoods}
                   />
                 );
               }}
