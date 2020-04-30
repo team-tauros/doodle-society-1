@@ -12,6 +12,21 @@ const NormalImageFeed = ({
 }) => {
   const [imgIndex, setImgIndex] = useState(0);
   const [doodIndex, setDoodIndex] = useState(0);
+  const [message, setMessage] = useState({to: "", body:""});
+
+
+  const textMessage = () =>{
+    if (message.to.length === 10 && message.body){
+      message.to = "+1" + message.to;
+      axios.post('/api/messages', message)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    } else {window.alert("Please use a valid phone number.")}
+  }
   //  delete a doodle
   const deleteDoodle = (id) => {
     //  set active index of doodle carousel to 0
@@ -22,7 +37,6 @@ const NormalImageFeed = ({
         getAllDoods();
       });
   };
-
   //  handle doodle carousel selection
   const handleSelectDood = (i) => setDoodIndex(i);
   //  handle image carousel selection
@@ -106,15 +120,18 @@ const NormalImageFeed = ({
                   <img className="bg-img" src={dood.original_url} alt="" />
                   <p align="justify"><font className="createdAt">{moment(dood.created_at).startOf('minute').fromNow()}</font></p>
                   <form>
-        <div>
-          <label htmlFor="to">To:</label>
-          <input
-             type="tel"
-             name="to"
-             id="to"
-          />
-        </div>
-        <button type="submit" placeholder="enter phone number">
+      <div>
+        <label htmlFor="to">Text It!:</label>
+        <input
+          type="tel"
+          name="to"
+          id="to"
+          placeholder="phone# ex: 1234567890"
+          onChange={(event) => setMessage({to: event.target.value, body: dood.url})
+          }
+        />
+      </div>
+        <button type="button" onClick={()=> textMessage()}>
           Share Your Doodle!
         </button>
       </form>

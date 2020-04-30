@@ -66,3 +66,21 @@ margin: 25px 50px 75px 100px;
   .profile-feed {height: auto;} 
 
 }
+
+form {
+  text-align: center;
+  padding: 1em;
+}
+form label {
+  display: block;
+}
+form input,
+form textarea {
+  box-sizing: border-box;
+}
+form div {
+  margin-bottom: 0.5em;
+}
+form.error {
+  outline: 2px solid #f00;
+}
