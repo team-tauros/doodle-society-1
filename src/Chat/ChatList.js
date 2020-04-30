@@ -15,8 +15,7 @@ export default ({ chats }) => (
                   </p>
                   <p>{chat.message}</p>
                 </div>
-                <div className="imageHolder">
-                <img src={avatar} className="img-responsive avatar" alt="logo" />
+                <div>   
               </div>
               </div>
             </div>
