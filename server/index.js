@@ -265,19 +265,19 @@ fastify.post('/live', (req, res) => {
 fastify.get('/*', (req, res) => res.sendFile('index.html'));
 
 fastify.post('/api/messages', (req, res) => {
-  res.header('Content-Type', 'application/json');
+  console.log(req.body.to);
   client.messages
     .create({
+      body: "check out this cool site https://google.com",
       from: process.env.TWILIO_PHONE_NUMBER,
       to: req.body.to,
-      body: req.body.body
     })
-    .then(() => {
-      res.send(JSON.stringify({ success: true }));
+    .then((message) => {
+      console.log(message.sid);
     })
     .catch(err => {
       console.log(err);
-      res.send(JSON.stringify({ success: false }));
+      res.send("Dood not sent");
     });
 });
 
