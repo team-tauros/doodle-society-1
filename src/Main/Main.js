@@ -19,7 +19,19 @@ const Home = ({
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState({});
   const [numDoods, setNumDoods] = useState(5);
+  const [message, setMessage] = useState({to: "", body:""});
 
+
+  const textMessage = () =>{
+      message.to = "+1" + message.to;
+      axios.post('/api/messages', message)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   //  toggle appearance of likes heart
   const toggleLike = (e) => {
     (e.currentTarget.className.baseVal === 'clear-heart') ? e.currentTarget.className.baseVal = 'red-heart' : e.currentTarget.className.baseVal = 'clear-heart';
@@ -89,6 +101,22 @@ const Home = ({
             setFriends={setFriends}
           />
         </div>
+        <form>
+      <div>
+        <label htmlFor="to">Invite Your Friends</label>
+        <input
+          type="tel"
+          name="to"
+          id="to"
+          placeholder="(555)-555-5555"
+          onChange={(event) => setMessage({to: event.target.value})
+          }
+        />
+      </div>
+        <button type="button" onClick={()=> textMessage()}>
+          Send Invite
+        </button>
+      </form>
       </div>
       <div className="main">
         {orderDoods().slice(0, numDoods).map((dood) => {
