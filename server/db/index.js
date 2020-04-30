@@ -16,6 +16,11 @@ const getUserByGoogleId = (req) => {
   return pool.query('SELECT * FROM users WHERE googleId = $1', [googleId]);
 };
 
+// retrieve all users
+const getUsers = (req) => {
+  return pool.query('SELECT * FROM users');
+}
+
 //  retrieve a user by their id
 const getUserById = (req) => {
   const id = parseInt(req.params.id);
@@ -215,6 +220,7 @@ const getAllUploads = (req) => {
 };
 
 module.exports = {
+  getUsers,
   getUserByGoogleId,
   getUserById,
   getUserByName,
