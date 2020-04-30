@@ -113,7 +113,7 @@ const Home = ({
           }
         />
       </div>
-        <button type="button" onClick={()=> textMessage()}>
+        <button type="button" className="btn-primary" onClick={()=> textMessage()}>
           Send Invite
         </button>
       </form>
