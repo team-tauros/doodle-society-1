@@ -1,7 +1,7 @@
 import React from "react";
 export default ({ text, username, handleTextChange }) => (
   <div>
-    <div className="row">
+    <div className="container-fluid">
     <div className="col-xs-12">
       <div className="chat">
         <div className="col-xs-5 col-xs-offset-3">
