@@ -224,6 +224,7 @@ function App() {
                 )
                   : (
                     <Main
+                      getDoods={getDoods}
                       user={user}
                       doods={doods}
                       friends={friends}

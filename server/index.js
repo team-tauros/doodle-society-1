@@ -61,6 +61,18 @@ fastify.post('/api/users', (req, res) => {
     });
 });
 
+fastify.get('/api/users', (req, res) => {
+  //  get all usernames
+  db.getUsers(req, res)
+    .then((user) => {
+    res.status(200).send(user.rows)
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
 fastify.get('/api/users/:id', (req, res) => {
   //  get a user by their id, then send that user's info back
   db.getUserById(req, res)

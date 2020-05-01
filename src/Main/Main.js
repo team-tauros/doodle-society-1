@@ -12,7 +12,7 @@ import TopTen from '../TopTen/TopTen'
 const moment = require('moment');
 //  main feed
 const Home = ({
-  user, doods, friends, getFriends, setFriends, likedDoods,
+  user, doods, friends, getFriends, setFriends, likedDoods, getDoods,
 }) => {
   //  likes and load will store temporary information for increases and decreases in a doodle's likes
   //  when a user likes/unlikes a doodle, the increase/decrease will immediately be rendered while the
@@ -119,7 +119,7 @@ const Home = ({
         </button>
       </form>
       </div>
-      <TopTen doods={doods} />
+      <TopTen doods={doods} getDoods={getDoods} />
       <div className="main">
         {orderDoods().slice(0, numDoods).map((dood) => {
           const doodler = dood.username === user.name ? user
