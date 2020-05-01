@@ -216,7 +216,19 @@ const getBio = (req) => {
 
 //  get all images from database
 const getAllUploads = (req) => {
-  return pool.query('SELECT url FROM images');
+  return pool.query('SELECT * FROM images');
+};
+
+// update live doodle in database
+const updateLiveDoodle = (req) => {
+  console.log(req.body)
+  const { url, original_id } = req.body;
+  return pool.query(`UPDATE live SET url = '${url}', original_id = ${original_id} WHERE id = ${1}`);
+};
+
+//  get live doodle from database
+const getLiveDoodle = (req) => {
+  return pool.query('SELECT * FROM live');
 };
 
 module.exports = {
@@ -243,5 +255,7 @@ module.exports = {
   getBio,
   deleteDoodle,
   deleteImage,
-  getAllUploads
+  getAllUploads,
+  updateLiveDoodle,
+  getLiveDoodle,
 };

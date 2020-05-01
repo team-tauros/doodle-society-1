@@ -309,3 +309,21 @@ fastify.post('/message', (req, res) => {
   pusher.trigger('chat', 'message', payload);
   res.send(payload)
 });
+
+fastify.post('/api/live', (req, res) => {
+  db.updateLiveDoodle(req, res)
+    .then(() => res.status(201).send())
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
+
+fastify.get('/api/live', (req, res) => {
+  db.getLiveDoodle(req, res)
+    .then((result) => res.status(200).send(result.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});

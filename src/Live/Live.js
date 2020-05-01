@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { v4 } from 'uuid';
 import axios from 'axios';
 import Pusher from 'pusher-js';
@@ -11,7 +11,7 @@ class Live extends Component {
     super(props);
     this.state = {
       images: [],
-      image: 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg',
+      image: '',
       count: 0,
     };
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -23,7 +23,8 @@ class Live extends Component {
     this.getAllImages = this.getAllImages.bind(this);
     this.setCanvas = this.setCanvas.bind(this);
     this.nextImage = this.nextImage.bind(this);
-    this.save = this.save.bind(this);
+    // this.save = this.save.bind(this);
+    this.getLiveImage = this.getLiveImage.bind(this);
   }
 
   isPainting = false;
@@ -96,6 +97,7 @@ class Live extends Component {
 
   componentDidMount() {
     this.getAllImages();
+    this.getLiveImage();
     // Here we set up the properties of the canvas element. 
     this.canvas.width = 1000;
     this.canvas.height = 800;
@@ -114,31 +116,56 @@ class Live extends Component {
     });
   }
 
+  intervalID;
+
+  componentWillUnmount() {
+    clearTimeout(this.intervalID);
+  }
+
   getAllImages() {
     axios.get('/api/images')
       .then((res) => {
+        console.log(res.data);
         this.setState({
-          images: res.data,
+          images: res.data
         })
-        console.log(this.state.images)
       })
       .catch((err) => console.error(err));
   };
 
+  getLiveImage() {
+    axios.get('/api/live')
+      .then((res) => {
+        this.setState({
+          image: res.data[0].url,
+          count: res.data[0].original_id
+        })
+        console.log(res.data);
+        this.intervalID = setTimeout(this.getLiveImage.bind(this), 5000);
+      })
+      .catch((err) => console.error(err));
+  }
+
   nextImage() {
-    let i = this.state.count;
+    let { images, count } = this.state;
+    let i = count;
     i++;
-    if (this.state.images[i]){
+    if (i < images.length){
+      const { url, id } = images[i];
       this.setState({
-        image: this.state.images[i].url,
+        image: url,
         count: i,
       })
+      axios.post('/api/live', { url: url, original_id: id });
     } else {
+      const { url, id } = images[0];
       this.setState({
-        image: this.state.images[0].url,
+        image: images[0].url,
         count: 0,
       })
+      axios.post('/api/live', { url: url, original_id: id });
     }
+    console.log(count)
   }
 
   setCanvas() {
@@ -159,34 +186,34 @@ class Live extends Component {
     });
   }
 
-  save() {
-    const {
-      user, getAllDoods,
-    } = this.props;
-    const options = {
-      title: 'SUCCESS!',
-      message: 'Doods saved!',
-      type: 'success', // 'default', 'success', 'info', 'warning'
-      container: 'center', // where to position the notifications
-      animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
-      animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
-      dismiss: {
-        duration: 1500,
-      },
-    };
-    //  get data url for doodle from canvas
-    const dataUrl = document.getElementById('canvas2').toDataURL();
-    //  get entered caption
-    //  post doodle info to server
-    axios.post('/api/doodles', {
-      url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
-    })
-      .then(() => {
-        getAllDoods();  //  refresh doodles
-        setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
-      })
-      .catch((err) => console.error(err));
-  };
+  // save() {
+  //   const {
+  //     user, getAllDoods,
+  //   } = this.props;
+  //   const options = {
+  //     title: 'SUCCESS!',
+  //     message: 'Doods saved!',
+  //     type: 'success', // 'default', 'success', 'info', 'warning'
+  //     container: 'center', // where to position the notifications
+  //     animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+  //     animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+  //     dismiss: {
+  //       duration: 1500,
+  //     },
+  //   };
+  //   //  get data url for doodle from canvas
+  //   const dataUrl = document.getElementById('canvas2').toDataURL();
+  //   //  get entered caption
+  //   //  post doodle info to server
+  //   axios.post('/api/doodles', {
+  //     url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
+  //   })
+  //     .then(() => {
+  //       getAllDoods();  //  refresh doodles
+  //       setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   render() {
     const { images, image } = this.state;
@@ -232,7 +259,7 @@ class Live extends Component {
             })} */}
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
-        <Button variant="success" onClick={this.save} >Save</Button>
+        {/* <Button variant="success" onClick={this.save} >Save</Button> */}
       </div>
     );
   }
