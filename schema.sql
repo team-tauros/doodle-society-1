@@ -66,6 +66,9 @@ CREATE TABLE live (
 );
 
 INSERT INTO doodles (url, caption, original_id, doodler_id, lat, lng) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 'blank canvas', 99999, 99999, null, null);
-INSERT INTO images (url, uploader_id) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 99999);
+INSERT INTO images (url, uploader_id) VALUES ('https://lh3.googleusercontent.com/proxy/mAoOHMgwEYcA7MHF7XOFtLKDw-dUuShaYBBq-3-1-KdaC5BL0LuuqqicKF1PFLWCCjlVuRHa36HosfXmv509Yj4z6FLKz1cQ2kPzpnLyCRCHDeXf69Ha9i8APdwP8JHbRePHFiqJAJ0empEcR9GEjsim2LC9WaNhrtE5POIZ', 99997);
+INSERT INTO images (url, uploader_id) VALUES ('https://img.pokemondb.net/artwork/large/tauros.jpg', 99998);
+INSERT INTO images (url, uploader_id) VALUES ('https://img1.kpopmap.com/2018/10/IU-Profile.png', 99999);
+-- INSERT INTO images (url, uploader_id) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 99999);
 INSERT INTO users (id, googleId, email, name, imageUrl) VALUES (99999, 99999, 'fakeemail', 'fakename', 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg');
-INSERT INTO live (url) VALUES ('https://img1.kpopmap.com/2018/10/IU-Profile.png');
+INSERT INTO live (url) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg');
