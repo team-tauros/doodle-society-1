@@ -17,7 +17,7 @@ class Live extends Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.endPaintEvent = this.endPaintEvent.bind(this);
-    this.pusher = new Pusher('4d4166c393ed3879b662', {
+    this.pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: 'us2',
     });
     this.getAllImages = this.getAllImages.bind(this);
