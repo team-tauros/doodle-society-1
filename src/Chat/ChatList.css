@@ -1,0 +1,30 @@
+ul {
+  list-style-type: none;
+}
+
+.chat {
+  margin-top: 50px;
+}
+.chatMessage {
+  background-color: #ffffff;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px auto;
+  width: 34vw;
+  display: table;
+}
+.box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-bottom: 1px solid #cccccc;
+  width: 40px;
+}
+
+.imageHolder {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 20px;
+  right: 50px;
+}
