@@ -59,6 +59,12 @@ CREATE TABLE bios (
   user_id int NOT NULL
 );
 
+CREATE TABLE live (
+  id serial PRIMARY KEY,
+  url VARCHAR (255) NOT NULL,
+)
+
 INSERT INTO doodles (url, caption, original_id, doodler_id, lat, lng) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 'blank canvas', 99999, 99999, null, null);
 INSERT INTO images (url, uploader_id) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg', 99999);
-INSERT INTO users (id, googleId, email, name, imageUrl) VALUES (99999, 99999, 'fakeemail', 'fakename', 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg')
+INSERT INTO users (id, googleId, email, name, imageUrl) VALUES (99999, 99999, 'fakeemail', 'fakename', 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg');
+INSERT INTO live (url) VALUES ('https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg');
