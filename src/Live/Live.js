@@ -140,7 +140,6 @@ class Live extends Component {
           image: res.data[0].url,
           count: res.data[0].original_id
         })
-        console.log(res.data);
         this.intervalID = setTimeout(this.getLiveImage.bind(this), 5000);
       })
       .catch((err) => console.error(err));
@@ -165,7 +164,6 @@ class Live extends Component {
       })
       axios.post('/api/live', { url: url, original_id: id });
     }
-    console.log(count)
   }
 
   setCanvas() {
@@ -217,7 +215,6 @@ class Live extends Component {
 
   render() {
     const { images, image } = this.state;
-    // console.log('this is', images);
     return (
       <div>
         <div>
