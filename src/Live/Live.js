@@ -23,7 +23,7 @@ class Live extends Component {
     this.getAllImages = this.getAllImages.bind(this);
     this.setCanvas = this.setCanvas.bind(this);
     this.nextImage = this.nextImage.bind(this);
-    this.save = this.save.bind(this);
+    // this.save = this.save.bind(this);
   }
 
   isPainting = false;
@@ -159,34 +159,34 @@ class Live extends Component {
     });
   }
 
-  save() {
-    const {
-      user, getAllDoods,
-    } = this.props;
-    const options = {
-      title: 'SUCCESS!',
-      message: 'Doods saved!',
-      type: 'success', // 'default', 'success', 'info', 'warning'
-      container: 'center', // where to position the notifications
-      animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
-      animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
-      dismiss: {
-        duration: 1500,
-      },
-    };
-    //  get data url for doodle from canvas
-    const dataUrl = document.getElementById('canvas2').toDataURL();
-    //  get entered caption
-    //  post doodle info to server
-    axios.post('/api/doodles', {
-      url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
-    })
-      .then(() => {
-        getAllDoods();  //  refresh doodles
-        setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
-      })
-      .catch((err) => console.error(err));
-  };
+  // save() {
+  //   const {
+  //     user, getAllDoods,
+  //   } = this.props;
+  //   const options = {
+  //     title: 'SUCCESS!',
+  //     message: 'Doods saved!',
+  //     type: 'success', // 'default', 'success', 'info', 'warning'
+  //     container: 'center', // where to position the notifications
+  //     animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
+  //     animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
+  //     dismiss: {
+  //       duration: 1500,
+  //     },
+  //   };
+  //   //  get data url for doodle from canvas
+  //   const dataUrl = document.getElementById('canvas2').toDataURL();
+  //   //  get entered caption
+  //   //  post doodle info to server
+  //   axios.post('/api/doodles', {
+  //     url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
+  //   })
+  //     .then(() => {
+  //       getAllDoods();  //  refresh doodles
+  //       setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   render() {
     const { images, image } = this.state;
@@ -232,7 +232,7 @@ class Live extends Component {
             })} */}
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
-        <Button variant="success" onClick={this.save} >Save</Button>
+        {/* <Button variant="success" onClick={this.save} >Save</Button> */}
       </div>
     );
   }
