@@ -216,7 +216,7 @@ const getBio = (req) => {
 
 //  get all images from database
 const getAllUploads = (req) => {
-  return pool.query('SELECT url FROM images');
+  return pool.query('SELECT * FROM images');
 };
 
 module.exports = {
@@ -243,5 +243,5 @@ module.exports = {
   getBio,
   deleteDoodle,
   deleteImage,
-  getAllUploads
+  getAllUploads,
 };
