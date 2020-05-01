@@ -318,3 +318,12 @@ fastify.post('/api/live', (req, res) => {
       res.status(500).send();
     });
 });
+
+fastify.get('/api/live', (req, res) => {
+  db.getLiveDoodle(req, res)
+    .then((result) => res.status(200).send(result.rows))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send();
+    });
+});
