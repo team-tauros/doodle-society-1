@@ -1,0 +1,11 @@
+.chat-home {
+  background-color: CornflowerBlue;
+  border: 4px solid silver;
+  border-radius: 15px;
+  padding: 2vmin 2vmin;
+  height: auto;
+  width: 34vw;
+  float: left;
+  clear: left;
+  margin-top: 30px;
+}
