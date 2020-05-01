@@ -18,8 +18,13 @@ const Map = ({ doods }) => {
 
   useEffect(()=> {
     if(doods[1]) {
-      setMarkers(doods[1])
-      console.log(doods[1])
+      const doodArray = []
+      Object.values(doods).forEach(user => {
+        user.length === 1 ?
+        doodArray.push(user[0])
+        : user.forEach(dood => doodArray.push(dood))
+      })
+      setMarkers(doodArray)
     }
   }, [doods])
 
