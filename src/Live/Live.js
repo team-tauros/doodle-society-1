@@ -136,11 +136,11 @@ class Live extends Component {
   getLiveImage() {
     axios.get('/api/live')
       .then((res) => {
-        console.log(res.data);
         this.setState({
           image: res.data[0].url,
-          count: res.data[0].id
+          count: res.data[0].original_id
         })
+        console.log(res.data);
         this.intervalID = setTimeout(this.getLiveImage.bind(this), 5000);
       })
       .catch((err) => console.error(err));
@@ -150,20 +150,20 @@ class Live extends Component {
     let { images, count } = this.state;
     let i = count;
     i++;
-    if (images[i]){
-      const url = images[i].url;
+    if (i < images.length){
+      const { url, id } = images[i];
       this.setState({
-        image: images[i].url,
+        image: url,
         count: i,
       })
-      axios.post('/api/live', { url });
+      axios.post('/api/live', { url: url, original_id: id });
     } else {
-      const url = images[0].url;
+      const { url, id } = images[0];
       this.setState({
         image: images[0].url,
         count: 0,
       })
-      axios.post('/api/live', { url });
+      axios.post('/api/live', { url: url, original_id: id });
     }
     console.log(count)
   }
