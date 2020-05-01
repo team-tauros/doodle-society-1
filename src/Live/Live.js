@@ -11,7 +11,7 @@ class Live extends Component {
     super(props);
     this.state = {
       images: [],
-      image: 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg',
+      image: '',
       count: 0,
     };
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -24,6 +24,7 @@ class Live extends Component {
     this.setCanvas = this.setCanvas.bind(this);
     this.nextImage = this.nextImage.bind(this);
     // this.save = this.save.bind(this);
+    this.getLiveImage = this.getLiveImage.bind(this);
   }
 
   isPainting = false;
@@ -96,6 +97,7 @@ class Live extends Component {
 
   componentDidMount() {
     this.getAllImages();
+    this.getLiveImage();
     // Here we set up the properties of the canvas element. 
     this.canvas.width = 1000;
     this.canvas.height = 800;
@@ -117,25 +119,42 @@ class Live extends Component {
   getAllImages() {
     axios.get('/api/images')
       .then((res) => {
+        console.log(res.data);
         this.setState({
-          images: res.data,
+          images: res.data
         })
-        console.log(this.state.images)
       })
       .catch((err) => console.error(err));
   };
 
+  getLiveImage() {
+    axios.get('/api/live')
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          image: res.data[0].url,
+          count: res.data[0].id
+        })
+      })
+      .catch((err) => console.error(err));
+  }
+
   nextImage() {
-    let i = this.state.count;
+    let { images, count } = this.state;
+    let i = count;
     i++;
-    if (this.state.images[i]){
+    if (images[i]){
+      const url = images[i].url;
+      axios.post('/api/live', { url });
       this.setState({
-        image: this.state.images[i].url,
+        image: images[i].url,
         count: i,
       })
     } else {
+      const url = images[0].url;
+      axios.post('/api/live', { url });
       this.setState({
-        image: this.state.images[0].url,
+        image: images[0].url,
         count: 0,
       })
     }
