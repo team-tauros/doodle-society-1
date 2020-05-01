@@ -219,6 +219,12 @@ const getAllUploads = (req) => {
   return pool.query('SELECT * FROM images');
 };
 
+// update live doodle in database
+const updateLiveDoodle = (req) => {
+  const { url } = req.body;
+  return pool.query(`UPDATE live SET url = '${url}' WHERE id = ${1}`);
+};
+
 module.exports = {
   getUsers,
   getUserByGoogleId,
@@ -244,4 +250,5 @@ module.exports = {
   deleteDoodle,
   deleteImage,
   getAllUploads,
+  updateLiveDoodle,
 };
