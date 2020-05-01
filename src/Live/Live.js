@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { v4 } from 'uuid';
 import axios from 'axios';
 import Pusher from 'pusher-js';
@@ -116,6 +116,12 @@ class Live extends Component {
     });
   }
 
+  intervalID;
+
+  componentWillUnmount() {
+    clearTimeout(this.intervalID);
+  }
+
   getAllImages() {
     axios.get('/api/images')
       .then((res) => {
@@ -135,6 +141,7 @@ class Live extends Component {
           image: res.data[0].url,
           count: res.data[0].id
         })
+        this.intervalID = setTimeout(this.getLiveImage.bind(this), 5000);
       })
       .catch((err) => console.error(err));
   }
@@ -145,19 +152,20 @@ class Live extends Component {
     i++;
     if (images[i]){
       const url = images[i].url;
-      axios.post('/api/live', { url });
       this.setState({
         image: images[i].url,
         count: i,
       })
+      axios.post('/api/live', { url });
     } else {
       const url = images[0].url;
-      axios.post('/api/live', { url });
       this.setState({
         image: images[0].url,
         count: 0,
       })
+      axios.post('/api/live', { url });
     }
+    console.log(count)
   }
 
   setCanvas() {
