@@ -1,10 +1,11 @@
 import React from "react";
+import "./ChatList.css";
 
 export default ({ chats }) => (
   <ul>
     {chats.map(chat => {
       return (
-        <div>
+        <div className="test">
           <div className="row show-grid">
             <div className="col-xs-12">
 
