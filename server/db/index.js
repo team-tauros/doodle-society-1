@@ -221,8 +221,9 @@ const getAllUploads = (req) => {
 
 // update live doodle in database
 const updateLiveDoodle = (req) => {
-  const { url } = req.body;
-  return pool.query(`UPDATE live SET url = '${url}' WHERE id = ${1}`);
+  console.log(req.body)
+  const { url, original_id } = req.body;
+  return pool.query(`UPDATE live SET url = '${url}', original_id = ${original_id} WHERE id = ${1}`);
 };
 
 //  get live doodle from database
