@@ -8,7 +8,7 @@ export default ({ text, username, handleTextChange }) => (
           <input
             type="text"
             value={text}
-            placeholder="chat here..."
+            placeholder={`hey ${username} join the chat`}
             className="form-control"
             onChange={handleTextChange}
             onKeyDown={handleTextChange}
@@ -17,7 +17,6 @@ export default ({ text, username, handleTextChange }) => (
         <div className="clearfix"></div>
       </div>
     </div>
-    <h4 className="greetings">Hello, {username}</h4>
   </div>
 </div>
 );
