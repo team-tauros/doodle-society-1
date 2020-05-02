@@ -6,7 +6,6 @@ import { Carousel } from 'react-bootstrap';
 import { store } from 'react-notifications-component';
 import Button from 'react-bootstrap/Button';
 import Chat from '../Chat/Chat';
-import './Live.css';
 
 class Live extends Component {
   constructor(props) {
