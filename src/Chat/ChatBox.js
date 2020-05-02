@@ -1,10 +1,10 @@
 import React from "react";
 export default ({ text, username, handleTextChange }) => (
   <div>
-    <div className="container-fluid">
+    <div className="container overflow-auto">
     <div className="col-xs-12">
       <div className="chat">
-        <div className="col-xs-5 col-xs-offset-3">
+        <div className="col-xs-5">
           <input
             type="text"
             value={text}
@@ -14,7 +14,7 @@ export default ({ text, username, handleTextChange }) => (
             onKeyDown={handleTextChange}
           />
         </div>
-        <div className="clearfix"></div>
+        {/* <div className="clearfix"></div> */}
       </div>
     </div>
   </div>
