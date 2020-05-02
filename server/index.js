@@ -17,7 +17,7 @@ fastify.register(require('fastify-cors'), {
   origin: '*'
 })
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.RDS_PORT || 4000;
 
 const start = async () => {
   try {
