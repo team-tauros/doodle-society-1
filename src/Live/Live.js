@@ -192,7 +192,8 @@ class Live extends Component {
           style={{  
             backgroundImage: `url('${image}')`,
             backgroundSize: '1000px 800px',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            border: '10px groove CornflowerBlue'
           }}
           onMouseDown={this.onMouseDown}
           onMouseLeave={this.endPaintEvent}
