@@ -5,6 +5,8 @@ import Pusher from 'pusher-js';
 import { Carousel } from 'react-bootstrap';
 import { store } from 'react-notifications-component';
 import Button from 'react-bootstrap/Button';
+import Chat from '../Chat/Chat';
+import './Live.css';
 
 class Live extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Live extends Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.endPaintEvent = this.endPaintEvent.bind(this);
-    this.pusher = new Pusher('4d4166c393ed3879b662', {
+    this.pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: 'us2',
     });
     this.getAllImages = this.getAllImages.bind(this);
@@ -216,16 +218,19 @@ class Live extends Component {
   render() {
     const { images, image } = this.state;
     return (
-      <div>
-        <div>
-          <h1>Live Doods</h1>
+      <div className="container-fluid live-room">
+          <h1>Doodle with Friends</h1>
+        <div className="row d-flex flex-row">
+          <div className="col-4 message-view">
+          <Chat user={this.props.user}></Chat>
+          </div>
+          <div className="col-8 canvas-view">
           <canvas
           // We use the ref attribute to get direct access to the canvas element. 
           ref={(ref) => (this.canvas = ref)}
           style={{  
             backgroundImage: `url('${image}')`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
+            backgroundSize: '700px 700px',
             backgroundRepeat: 'no-repeat'
           }}
           onMouseDown={this.onMouseDown}
@@ -254,6 +259,7 @@ class Live extends Component {
               />
               )
             })} */}
+          </div>
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
         {/* <Button variant="success" onClick={this.save} >Save</Button> */}

@@ -307,9 +307,10 @@ function App() {
                     />
                   );
                 }
+                const liveUser = props.location.user || user;
                 return (
                   <Live
-                    user={user}
+                    user={liveUser}
                     original_id={props.location.original_id}
                     getAllDoods={getAllDoods}
                   />

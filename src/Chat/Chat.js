@@ -1,4 +1,4 @@
-import React, { Component, useReducer, useEffect } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import ChatList from './ChatList';
@@ -8,22 +8,24 @@ import './Chat.css';
 class Chat extends Component {
   constructor(props) {
     super(props);
+    const firstName = props.user.name;
+    const first = firstName.split(' ');
     this.state = {
       text: '',
-      username: props.user.name,
+      username: first[0],
       chats: []
     };
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
-
+  
   componentDidMount() {
-    const pusher = new Pusher('5f62025ddf3789ba4978', {
+    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: 'us2',
     });
     const channel = pusher.subscribe('chat');
     channel.bind('message', data => {
       this.setState({ chats: [...this.state.chats, data], test: '' });
     });
-    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   handleTextChange(e) {
@@ -34,21 +36,24 @@ class Chat extends Component {
       };
       axios.post('http://localhost:4000/message', payload);
     } else {
-      this.setState({ text: e.target.value });
+      this.setState({ text: e.currentTarget.value });
     }
   }
 
   render() {
     return (
-      <div>
-          <h1>Welcome to React-Pusher Chat</h1>
+      <div className='chat-home'>
         <section>
-          <ChatList chats={this.state.chats} />
-          <ChatBox
-            text={this.state.text}
-            username={this.state.username}
-            handleTextChange={this.handleTextChange}
-          />
+          <div className="container-fluid">
+          <div className="d-flex flex-column">
+            <ChatList chats={this.state.chats} />
+            <ChatBox
+              text={this.state.text}
+              username={this.state.username}
+              handleTextChange={this.handleTextChange}
+            />
+            </div>
+          </div>  
         </section>
       </div>
     );

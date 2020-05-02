@@ -1,0 +1,23 @@
+ul {
+  list-style-type: none;
+}
+/* .row{
+  margin-left: -10px;
+} */
+.chat {
+  margin-top: 10px;
+}
+.chatMessage {
+  background-color: #ffffff;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: -10px;
+  width: 100%;
+  display: table;
+}
+.box {
+  background-color: #ffffff;
+  text-align: left;
+  margin-left: -10px;
+}

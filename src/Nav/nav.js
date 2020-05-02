@@ -35,19 +35,11 @@ const NavigationBar = ({
             <Link
               className="navlink"
               to={{
-                pathname: '/chat',
+                pathname: '/live',
                 user,
               }}
             >
-              Chat
-            </Link>
-          </Nav.Item>          
-          <Nav.Item>
-            <Link
-              className="navlink"
-              to="/live"
-            >
-              LiveDoods
+              Live Doodle 
             </Link>
           </Nav.Item>
           {/* added in the map Nav.Item here */}
