@@ -36,7 +36,7 @@ const Login = ({ setUser }) => {
                 clientId="803513597131-pp5q6uea273cs7qtj6rmidaq4jptvpdq.apps.googleusercontent.com"
                 buttonText="Login"
                 onSuccess={responseGoogle}
-                onFailure={() => console.log('failed to login')}
+                onFailure={(err) => console.log(err)}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
             />
