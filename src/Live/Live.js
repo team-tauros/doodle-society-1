@@ -22,10 +22,9 @@ class Live extends Component {
       cluster: 'us2',
     });
     this.getAllImages = this.getAllImages.bind(this);
-    this.setCanvas = this.setCanvas.bind(this);
     this.nextImage = this.nextImage.bind(this);
-    // this.save = this.save.bind(this);
     this.getLiveImage = this.getLiveImage.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   isPainting = false;
@@ -57,12 +56,14 @@ class Live extends Component {
       this.paint(this.prevPos, offSetData, this.userStrokeStyle);
     }
   }
+  
   endPaintEvent() {
     if (this.isPainting) {
       this.isPainting = false;
       this.sendPaintData();
     }
   }
+
   paint(prevPos, currPos, strokeStyle) {
     const { offsetX, offsetY } = currPos;
     const { offsetX: x, offsetY: y } = prevPos;
@@ -118,11 +119,11 @@ class Live extends Component {
   }
 
   intervalID;
-
   componentWillUnmount() {
     clearTimeout(this.intervalID);
   }
 
+  // get all images uploaded to database
   getAllImages() {
     axios.get('/api/images')
       .then((res) => {
@@ -134,6 +135,7 @@ class Live extends Component {
       .catch((err) => console.error(err));
   };
 
+  // get current live image - this will run every 5 seconds to update image
   getLiveImage() {
     axios.get('/api/live')
       .then((res) => {
@@ -146,6 +148,7 @@ class Live extends Component {
       .catch((err) => console.error(err));
   }
 
+  // cycle through images and updates live image for all users (could look better but works)
   nextImage() {
     let { images, count } = this.state;
     let i = count;
@@ -167,55 +170,14 @@ class Live extends Component {
     }
   }
 
-  setCanvas() {
-    this.canvas.width = 1000;
-    this.canvas.height = 800;
-    this.ctx = this.canvas.getContext('2d');
-    this.ctx.lineJoin = 'round';
-    this.ctx.lineCap = 'round';
-    this.ctx.lineWidth = 5;
-    const channel = this.pusher.subscribe('painting');
-    channel.bind('draw', (data) => {
-      const { userId, line } = data;
-      if (userId !== this.userId) {
-        line.forEach((position) => {
-          this.paint(position.start, position.stop, this.guestStrokeStyle);
-        });
-      }
-    });
+  // clear canvas for user
+  clear() {
+    const context = this.canvas.getContext('2d');
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  // save() {
-  //   const {
-  //     user, getAllDoods,
-  //   } = this.props;
-  //   const options = {
-  //     title: 'SUCCESS!',
-  //     message: 'Doods saved!',
-  //     type: 'success', // 'default', 'success', 'info', 'warning'
-  //     container: 'center', // where to position the notifications
-  //     animationIn: ['animated', 'fadeIn'], // animate.css classes that's applied
-  //     animationOut: ['animated', 'fadeOut'], // animate.css classes that's applied
-  //     dismiss: {
-  //       duration: 1500,
-  //     },
-  //   };
-  //   //  get data url for doodle from canvas
-  //   const dataUrl = document.getElementById('canvas2').toDataURL();
-  //   //  get entered caption
-  //   //  post doodle info to server
-  //   axios.post('/api/doodles', {
-  //     url: dataUrl, caption: 'live doodle', original_id: 99999, doodler_id: user.id, lat: 29.972065, lng: -90.111533,
-  //   })
-  //     .then(() => {
-  //       getAllDoods();  //  refresh doodles
-  //       setTimeout(() => { store.addNotification(options); }, 0); //  notify user of successful save
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
-
   render() {
-    const { images, image } = this.state;
+    const { image } = this.state;
     return (
       <div className="container-fluid live-room">
           <h1>Doodle with Friends</h1>
@@ -230,7 +192,8 @@ class Live extends Component {
           style={{  
             backgroundImage: `url('${image}')`,
             backgroundSize: '1000px 800px',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            border: '10px groove CornflowerBlue'
           }}
           onMouseDown={this.onMouseDown}
           onMouseLeave={this.endPaintEvent}
@@ -239,29 +202,10 @@ class Live extends Component {
           className="canvas2"
           id="canvas2" 
           />
-          {/* {images.map((image) => {
-            this.setCanvas();
-            return (
-              <canvas
-              // We use the ref attribute to get direct access to the canvas element. 
-              ref={(ref) => (this.canvas = ref)}
-              style={{  
-                backgroundImage: `url('${image.url}')`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat'
-              }}
-              onMouseDown={this.onMouseDown}
-              onMouseLeave={this.endPaintEvent}
-              onMouseUp={this.endPaintEvent}
-              onMouseMove={this.onMouseMove}
-              />
-              )
-            })} */}
           </div>
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
-        {/* <Button variant="success" onClick={this.save} >Save</Button> */}
+        <Button onClick={this.clear}>Clear</Button>
       </div>
     );
   }
