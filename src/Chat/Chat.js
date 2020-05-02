@@ -44,12 +44,16 @@ class Chat extends Component {
     return (
       <div className='chat-home'>
         <section>
-          <ChatList chats={this.state.chats} />
-          <ChatBox
-            text={this.state.text}
-            username={this.state.username}
-            handleTextChange={this.handleTextChange}
-          />
+          <div className="container-fluid">
+          <div className="d-flex flex-column">
+            <ChatList chats={this.state.chats} />
+            <ChatBox
+              text={this.state.text}
+              username={this.state.username}
+              handleTextChange={this.handleTextChange}
+            />
+            </div>
+          </div>  
         </section>
       </div>
     );
