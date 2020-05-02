@@ -24,6 +24,7 @@ class Live extends Component {
     this.getAllImages = this.getAllImages.bind(this);
     this.nextImage = this.nextImage.bind(this);
     this.getLiveImage = this.getLiveImage.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   isPainting = false;
@@ -169,6 +170,12 @@ class Live extends Component {
     }
   }
 
+  // clear canvas for user
+  clear() {
+    const context = this.canvas.getContext('2d');
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
   render() {
     const { image } = this.state;
     return (
@@ -197,6 +204,7 @@ class Live extends Component {
           </div>
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
+        <Button onClick={this.clear}>Clear</Button>
       </div>
     );
   }
