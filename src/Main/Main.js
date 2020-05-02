@@ -20,7 +20,7 @@ const Home = ({
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState({});
   const [numDoods, setNumDoods] = useState(5);
-  const [message, setMessage] = useState({to: "", body:""});
+  const [message, setMessage] = useState({to: "", body:"", name:""});
 
 
   const textMessage = () =>{
@@ -111,7 +111,7 @@ const Home = ({
           name="to"
           id="to"
           placeholder="(555)-555-5555"
-          onChange={(event) => setMessage({to: event.target.value})
+          onChange={(event) => setMessage({to: event.target.value, name: user.name})
           }
         />
       </div>
