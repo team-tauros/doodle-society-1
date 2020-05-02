@@ -6,7 +6,6 @@ import { Carousel } from 'react-bootstrap';
 import { store } from 'react-notifications-component';
 import Button from 'react-bootstrap/Button';
 import Chat from '../Chat/Chat';
-import './Live.css';
 
 class Live extends Component {
   constructor(props) {
@@ -230,7 +229,7 @@ class Live extends Component {
           ref={(ref) => (this.canvas = ref)}
           style={{  
             backgroundImage: `url('${image}')`,
-            backgroundSize: '700px 700px',
+            backgroundSize: '1000px 800px',
             backgroundRepeat: 'no-repeat'
           }}
           onMouseDown={this.onMouseDown}
