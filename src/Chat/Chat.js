@@ -35,6 +35,7 @@ class Chat extends Component {
         message: this.state.text
       };
       axios.post('http://localhost:4000/message', payload);
+      this.setState({text: ''});
     } else {
       this.setState({ text: e.currentTarget.value });
     }
