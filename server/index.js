@@ -280,7 +280,7 @@ fastify.post('/api/messages', (req, res) => {
   console.log(req.body.to);
   client.messages
     .create({
-      body: "check out this cool site https://google.com",
+      body: `${req.body.name} has invited you to the Doodle Society! Check it out! https://google.com`,
       from: process.env.TWILIO_PHONE_NUMBER,
       to: req.body.to,
     })
