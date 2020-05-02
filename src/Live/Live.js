@@ -5,6 +5,7 @@ import Pusher from 'pusher-js';
 import { Carousel } from 'react-bootstrap';
 import { store } from 'react-notifications-component';
 import Button from 'react-bootstrap/Button';
+import Chat from '../Chat/Chat';
 
 class Live extends Component {
   constructor(props) {
@@ -233,6 +234,7 @@ class Live extends Component {
           </div>
         <Button onClick={this.nextImage}>New Image</Button> 
         <Button variant="success" onClick={this.save} >Save</Button>
+        <Chat user={this.props.user}></Chat>
       </div>
     );
   }
