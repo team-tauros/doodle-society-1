@@ -229,7 +229,7 @@ class Live extends Component {
           ref={(ref) => (this.canvas = ref)}
           style={{  
             backgroundImage: `url('${image}')`,
-            backgroundSize: '700px 700px',
+            backgroundSize: '1000px 800px',
             backgroundRepeat: 'no-repeat'
           }}
           onMouseDown={this.onMouseDown}
