@@ -20,11 +20,12 @@ const Home = ({
   const [likes, setLikes] = useState({});
   const [load, setLoad] = useState({});
   const [numDoods, setNumDoods] = useState(5);
-  const [message, setMessage] = useState({to: "", body:""});
+  const [message, setMessage] = useState({to: "", body:"", name:""});
 
 
   const textMessage = () =>{
       message.to = "+1" + message.to;
+      document.getElementById("twilio-form").reset();
       axios.post('/api/messages', message)
       .then(function (response) {
         console.log(response);
@@ -102,7 +103,7 @@ const Home = ({
             setFriends={setFriends}
           />
         </div>
-        <form>
+        <form id="twilio-form">
       <div>
         <label htmlFor="to">Invite Your Friends</label>
         <input
@@ -110,7 +111,7 @@ const Home = ({
           name="to"
           id="to"
           placeholder="(555)-555-5555"
-          onChange={(event) => setMessage({to: event.target.value})
+          onChange={(event) => setMessage({to: event.target.value, name: user.name})
           }
         />
       </div>
