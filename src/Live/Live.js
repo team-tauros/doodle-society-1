@@ -195,14 +195,14 @@ class Live extends Component {
     return (
       <div>
         <div>
-          <h1>Live Doods</h1>
+          <h1>Doodle with Friends</h1>
           <canvas
           // We use the ref attribute to get direct access to the canvas element. 
           ref={(ref) => (this.canvas = ref)}
           style={{  
             backgroundImage: `url('${image}')`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
+            backgroundPosition: 'center right',
+            backgroundSize: '700px 700px',
             backgroundRepeat: 'no-repeat'
           }}
           onMouseDown={this.onMouseDown}
